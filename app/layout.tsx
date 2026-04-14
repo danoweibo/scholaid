@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/providers/theme";
 import { geistSans, geistMono } from "@/constants/fonts";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { Merriweather, Instrument_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
 
@@ -45,7 +46,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <TooltipProvider>{children}</TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
