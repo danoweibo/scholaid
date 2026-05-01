@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+} from "@/components/ui/collapsible";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -15,23 +15,23 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar"
-import { HugeiconsIcon } from "@hugeicons/react"
-import { ArrowRight01Icon } from "@hugeicons/core-free-icons"
+} from "@/components/ui/sidebar";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 
 export function NavMain({
   items,
 }: {
   items: {
-    title: string
-    url: string
-    icon: React.ReactNode
-    isActive?: boolean
+    title: string;
+    url: string;
+    icon: React.ReactNode;
+    isActive?: boolean;
     items?: {
-      title: string
-      url: string
-    }[]
-  }[]
+      title: string;
+      url: string;
+    }[];
+  }[];
 }) {
   return (
     <SidebarGroup>
@@ -57,7 +57,7 @@ export function NavMain({
                   className="aria-expanded:rotate-90"
                 >
                   <HugeiconsIcon icon={ArrowRight01Icon} strokeWidth={2} />
-                  <span className="sr-only">Toggle</span>
+                  <span className="sr-only">Toggler</span>
                 </SidebarMenuAction>
                 <CollapsibleContent>
                   <SidebarMenuSub>
@@ -76,5 +76,5 @@ export function NavMain({
         ))}
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }
