@@ -1,0 +1,46 @@
+{
+  "name": "server",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc && tsc-alias",
+    "start": "node dist/server.js",
+    "lint": "eslint"
+  },
+  "keywords": [
+    "scholaid",
+    "students",
+    "server"
+  ],
+  "author": "Daniel Oweibo",
+  "packageManager": "pnpm@10.33.2",
+  "dependencies": {
+    "@scholaid/ui": "workspace:*",
+    "@fastify/cors": "^11.2.0",
+    "@fastify/env": "^6.0.0",
+    "better-auth": "^1.6.9",
+    "dotenv": "^17.4.2",
+    "drizzle-orm": "^0.45.2",
+    "fastify": "^5.8.5",
+    "fastify-plugin": "^5.1.0",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "@scholaid/eslint-config": "workspace:*",
+    "@scholaid/typescript-config": "workspace:*",
+    "@types/node": "^22.19.0",
+    "@types/pg": "^8.20.0",
+    "drizzle-kit": "^0.31.10",
+    "tsc-alias": "^1.8.16",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.5"
+  },
+  "overrides": {
+    "drizzle-kit": {
+      "@esbuild-kit/esm-loader": "npm:tsx@^4.21.0"
+    }
+  }
+}
