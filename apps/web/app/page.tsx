@@ -1,7 +1,5 @@
 import Image from "next/image";
-import { Card } from "@scholaid/ui/card";
-import { Gradient } from "@scholaid/ui/gradient";
-import { TurborepoLogo } from "@scholaid/ui/turborepo-logo";
+import { ScholaidLogo } from "@scholaid/ui/scholaid";
 
 const LINKS = [
   {
@@ -66,16 +64,9 @@ export default function Page() {
                 width={614}
               />
             </div>
-            <div className="absolute z-50 flex items-center justify-center w-64 h-64">
-              <Gradient
-                className="opacity-90 w-[120px] h-[120px]"
-                conic
-                small
-              />
-            </div>
 
             <div className="flex justify-center items-center z-50">
-              <TurborepoLogo />
+              <ScholaidLogo />
             </div>
           </div>
           <Gradient
@@ -102,14 +93,6 @@ export default function Page() {
             </svg>
           </div>
         </div>
-      </div>
-
-      <div className="grid mb-32 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        {LINKS.map(({ title, href, description }) => (
-          <Card href={href} key={title} title={title}>
-            {description}
-          </Card>
-        ))}
       </div>
     </main>
   );

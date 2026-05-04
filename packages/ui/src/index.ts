@@ -1,4 +1,2 @@
-export * from "./components/card";
-export * from "./components/gradient";
-export * from "./components/turborepo";
+export * from "./components/scholaid";
 import "./styles.css";
