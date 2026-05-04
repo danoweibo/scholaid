@@ -2,7 +2,13 @@ import React from "react";
 
 type Props = React.SVGProps<SVGSVGElement>;
 
-export default function ScholaidLogo({ className, ...props }: Props) {
+export default function ScholaidLogo({
+  className,
+  ...props
+}: {
+  className: string;
+  props: Props;
+}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

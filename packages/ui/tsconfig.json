@@ -2,6 +2,7 @@
   "extends": "@scholaid/typescript-config/react-library.json",
   "compilerOptions": {
     "outDir": "dist",
+    "baseUrl": ".",
     "strictNullChecks": true
   },
   "include": ["src"],
