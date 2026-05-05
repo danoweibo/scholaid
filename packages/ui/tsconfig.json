@@ -1,6 +1,7 @@
 {
   "extends": "@scholaid/typescript-config/react-library.json",
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "outDir": "dist",
     "baseUrl": ".",
     "strictNullChecks": true
