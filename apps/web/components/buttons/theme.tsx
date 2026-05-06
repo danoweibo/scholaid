@@ -2,44 +2,58 @@
 
 import * as React from "react";
 import { useTheme } from "next-themes";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Sun01Icon, Moon01Icon } from "@hugeicons/core-free-icons";
+import { SunIcon, MoonIcon } from "lucide-react";
 
 export function ModeToggle() {
   const { setTheme } = useTheme();
+  const [open, setOpen] = React.useState(false);
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button>
-          <HugeiconsIcon
-            icon={Sun01Icon}
-            className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
-          />
-          <HugeiconsIcon
-            icon={Moon01Icon}
-            className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
-          />
-          <span className="sr-only">Toggle theme</span>
-        </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className="relative inline-block text-left">
+      {/* Trigger */}
+      <button
+        onClick={() => setOpen((prev) => !prev)}
+        className="relative flex h-8 w-8 items-center justify-center"
+      >
+        <SunIcon className="h-[1.2rem] w-[1.2rem] transition-all dark:scale-0 dark:-rotate-90" />
+        <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+        <span className="sr-only">Toggle theme</span>
+      </button>
+
+      {/* Dropdown */}
+      {open && (
+        <div className="absolute right-0 z-50 mt-2 w-32 rounded-md border bg-white shadow-md dark:bg-black">
+          <button
+            onClick={() => {
+              setTheme("light");
+              setOpen(false);
+            }}
+            className="block w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            Light
+          </button>
+
+          <button
+            onClick={() => {
+              setTheme("dark");
+              setOpen(false);
+            }}
+            className="block w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            Dark
+          </button>
+
+          <button
+            onClick={() => {
+              setTheme("system");
+              setOpen(false);
+            }}
+            className="block w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            System
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
