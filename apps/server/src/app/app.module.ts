@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppService } from '@/app.service';
-import { AppController } from '@/app.controller';
+import { AppService } from '@/app/app.service';
+import { AppController } from '@/app/app.controller';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { auth } from '@/auth/auth';
-import { UserController } from '@/user.controller';
-import { DbModule } from './db.module';
+import { UserController } from '@/auth/auth.controller';
+import { DbModule } from '@/db/db.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
