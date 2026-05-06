@@ -3,25 +3,8 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { openAPI, admin } from 'better-auth/plugins';
 import { db } from '@/db';
 import * as schema from '@/db/schema';
+import { createUserProfileHook } from './hooks/create-user-profile.hook';
 
-/**
- * Core better-auth instance for Scholaid.
- *
- * Auth routes are mounted at /api/auth/* by the @thallesp/nestjs-better-auth
- * module, which reads `basePath` from this config automatically.
- *
- * Plugins:
- *  - openAPI  → Scalar UI at  GET /api/auth/reference
- *              JSON schema at  GET /api/auth/open-api/generate-schema
- *  - admin    → System-operator (developer) role management.
- *               Grants access to user/session management endpoints.
- *               Use @Roles(['admin']) on NestJS controllers to protect routes.
- *
- * CORS:
- *  trustedOrigins is picked up by the nestjs wrapper and applied to all
- *  /api/auth/* routes automatically on Fastify (since app-level @fastify/cors
- *  does not cover middleware-mounted routes).
- */
 export const auth = betterAuth({
   basePath: '/api/auth',
   baseURL: process.env.BETTER_AUTH_URL,
@@ -32,7 +15,27 @@ export const auth = betterAuth({
     schema,
   }),
 
-  hooks: {},
+  user: {
+    additionalFields: {
+      role: {
+        type: 'string',
+        required: true,
+        input: true, // allows it to be passed in the sign-up body
+      },
+    },
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        after: [
+          {
+            matcher: (ctx) => ctx.path === '/sign-up/email',
+            handler: createUserProfileHook,
+          },
+        ],
+      },
+    },
+  },
 
   trustedOrigins: [
     'http://scholaid.local:5000',
