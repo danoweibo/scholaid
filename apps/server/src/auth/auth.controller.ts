@@ -5,7 +5,7 @@ import {
   OptionalAuth,
 } from '@thallesp/nestjs-better-auth';
 import { sql } from 'drizzle-orm';
-import { DbService } from '@/db.service';
+import { DbService } from '@/db/db.service';
 import type { UserSession } from '@thallesp/nestjs-better-auth';
 
 @Controller('users')
