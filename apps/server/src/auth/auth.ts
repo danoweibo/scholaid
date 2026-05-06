@@ -24,15 +24,13 @@ export const auth = betterAuth({
       },
     },
   },
+
   databaseHooks: {
     user: {
       create: {
-        after: [
-          {
-            matcher: (ctx) => ctx.path === '/sign-up/email',
-            handler: createUserProfileHook,
-          },
-        ],
+        after: createUserProfileHook as (
+          user: Record<string, unknown>,
+        ) => Promise<void>,
       },
     },
   },

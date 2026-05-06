@@ -76,6 +76,7 @@ export const user = pgTable('user', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
   role: text('role').notNull().default('student'),
+  institutionName: text('institution_name'),
 });
 
 export const session = pgTable('session', {

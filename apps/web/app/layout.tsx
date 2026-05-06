@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "@scholaid/ui/styles.css";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
+import { LenisProvider } from "@/providers/lenis";
+import { ThemeProvider } from "@/providers/theme";
+/* import { GooeyToaster } from "@/providers/toaster"; */
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -16,8 +20,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={geist.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={geist.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <LenisProvider>{children}</LenisProvider>
+          {/* <GooeyToaster /> */}
+        </ThemeProvider>
+        {process.env.NODE_ENV === "production" && <Analytics />}
+      </body>
     </html>
   );
 }
