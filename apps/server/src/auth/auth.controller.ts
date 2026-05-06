@@ -5,12 +5,12 @@ import {
   OptionalAuth,
 } from '@thallesp/nestjs-better-auth';
 import { sql } from 'drizzle-orm';
-import { DbService } from '@/db/db.service';
+import { DBService } from '@/db/db.service';
 import type { UserSession } from '@thallesp/nestjs-better-auth';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly db: DbService) {}
+  constructor(private readonly db: DBService) {}
 
   @Get('me')
   async getProfile(@Session() session: UserSession) {

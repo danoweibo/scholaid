@@ -4,7 +4,7 @@ import { AppController } from '@/app/app.controller';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { auth } from '@/auth/auth';
 import { UserController } from '@/auth/auth.controller';
-import { DbModule } from '@/db/db.module';
+import { DBModule } from '@/db/db.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -12,7 +12,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    DbModule,
+    DBModule,
     AuthModule.forRoot({ auth }),
   ],
   controllers: [AppController, UserController],

@@ -4,7 +4,7 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
 
 @Injectable()
-export class DbService {
+export class DBService {
   public db;
 
   constructor(config: ConfigService) {
