@@ -38,8 +38,6 @@ export const nextJsConfig = [
       "react/react-in-jsx-scope": "off",
     },
   },
-
-  // ✅ ADD THIS BLOCK
   {
     plugins: {
       import: importPlugin,
