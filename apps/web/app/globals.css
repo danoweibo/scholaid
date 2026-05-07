@@ -27,7 +27,7 @@
 }
 
 body {
-  font-family: var(--font-apfel-grotezk);
+  font-family: var(--font-apfel-mittel);
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
