@@ -145,7 +145,7 @@ function IconPlaceholder({
       initial={IMG_INITIAL}
       animate={IMG_ANIMATE}
       transition={IMG_SPRING}
-      className="relative flex flex-col items-center justify-center gap-3.5 overflow-hidden rounded-2xl"
+      className="relative flex flex-col items-center justify-center gap-[14px] overflow-hidden rounded-2xl"
       style={{
         width: "100%",
         height: "100%",
@@ -203,7 +203,7 @@ function IconPlaceholder({
       </div>
 
       <span
-        className="font-apfel-mittel relative z-10 text-[10px] font-medium tracking-widest uppercase"
+        className="font-apfel-mittel relative z-10 text-[10px] font-medium tracking-[0.1em] uppercase"
         style={{ color: accent, opacity: 0.45 }}
       >
         Image placeholder
@@ -310,7 +310,7 @@ function Slide({
 
       {/* Overlay */}
       <div
-        className="absolute inset-0 z-1 transition-[background] duration-500 ease-in-out"
+        className="absolute inset-0 z-[1] transition-[background] duration-500 ease-in-out"
         style={{
           background: isActive
             ? "linear-gradient(to top, rgba(1,14,30,0.75) 0%, rgba(1,14,30,0.08) 52%, transparent 100%)"
@@ -320,7 +320,7 @@ function Slide({
 
       {/* Noise */}
       <div
-        className="pointer-events-none absolute inset-0 z-1 opacity-[0.03]"
+        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.03]"
         style={{ backgroundImage: NOISE_BG, backgroundSize: "180px 180px" }}
       />
 
@@ -331,7 +331,7 @@ function Slide({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.18 }}
-          className="absolute inset-0 z-2 flex"
+          className="absolute inset-0 z-[2] flex"
           style={{
             flexDirection: isStackedLayout ? "column" : "row",
             alignItems: isStackedLayout ? "stretch" : "flex-end",
@@ -349,7 +349,7 @@ function Slide({
           >
             {/* Icon pill */}
             <div
-              className="mb-4 inline-flex w-fit items-center gap-1.75"
+              className="mb-4 inline-flex w-fit items-center gap-[7px]"
               style={{
                 marginBottom: isMobile ? "9px" : isTablet ? "12px" : "16px",
               }}
@@ -377,7 +377,7 @@ function Slide({
                 </svg>
               </div>
               <span
-                className="font-patua text-[11px] font-semibold tracking-widest uppercase"
+                className="font-patua text-[11px] font-semibold tracking-[0.1em] uppercase"
                 style={{
                   color: slide.accent,
                   opacity: 0.75,
@@ -394,7 +394,7 @@ function Slide({
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.36, ease: "easeOut" }}
-              className="font-patua leading-[1.06] font-extrabold tracking-tight whitespace-pre-line text-white"
+              className="font-patua leading-[1.06] font-extrabold tracking-[-0.025em] whitespace-pre-line text-white"
               style={{
                 fontSize: isMobile
                   ? "clamp(22px,7.5vw,30px)"
@@ -430,11 +430,11 @@ function Slide({
             </motion.p>
 
             {/* Progress dots */}
-            <div className="flex items-center gap-1.75">
+            <div className="flex items-center gap-[7px]">
               {slides.map((_, i) => (
                 <motion.div
                   key={i}
-                  className="h-0.75 rounded-full"
+                  className="h-[3px] rounded-full"
                   style={{
                     background:
                       i === index ? slide.accent : "rgba(255,255,255,0.2)",
@@ -492,7 +492,7 @@ function Slide({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.28, delay: THUMB_DELAY }}
-          className="absolute inset-0 z-2 flex items-center"
+          className="absolute inset-0 z-[2] flex items-center"
           style={{
             flexDirection: isVertical ? "row" : "column",
             justifyContent: isVertical ? "flex-start" : "flex-end",
@@ -503,7 +503,7 @@ function Slide({
           {isVertical ? (
             <div className="flex items-center gap-2">
               <div
-                className="flex items-center justify-center rounded-lg"
+                className="flex items-center justify-center rounded-[8px]"
                 style={{
                   width: 24,
                   height: 24,
@@ -525,7 +525,7 @@ function Slide({
                 </svg>
               </div>
               <span
-                className="font-patua text-[10px] font-semibold tracking-widest uppercase"
+                className="font-patua text-[10px] font-semibold tracking-[0.1em] uppercase"
                 style={{ color: "rgba(180,215,235,0.5)" }}
               >
                 {slide.tag}
@@ -556,7 +556,7 @@ function Slide({
                 </svg>
               </div>
               <div
-                className="w-0.75 rounded-full"
+                className="w-[3px] rounded-full"
                 style={{ height: 22, background: `${slide.accent}88` }}
               />
             </>
@@ -621,9 +621,9 @@ export default function HeroSection() {
         }
       `}</style>
 
-      <div className="hero-wrapper w-[83.333%] max-w-400">
+      <div className="hero-wrapper w-[83.333%] max-w-[1600px]">
         <div
-          className="slider-track flex flex-row gap-2.5"
+          className="slider-track flex flex-row gap-[10px]"
           style={{
             width: "100%",
             height: "82vh",
