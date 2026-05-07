@@ -1,7 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { Session, AllowAnonymous, Roles } from '@thallesp/nestjs-better-auth';
-import { ScholaidRoles } from '@/auth/decorators/scholaid-role.decorator';
-import type { ScholaidSession } from '@/auth/types/session.types';
+import { ScholaidRoles, type ScholaidSession } from '@/auth';
 
 /**
  * UsersController demonstrates every layer of the protected route system.
