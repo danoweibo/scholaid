@@ -8,6 +8,13 @@
       "when": 1778085621431,
       "tag": "0000_define_scholaid_users",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1778155373529,
+      "tag": "0001_config_auth_roles",
+      "breakpoints": true
     }
   ]
 }
