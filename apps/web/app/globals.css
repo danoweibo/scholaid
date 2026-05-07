@@ -15,7 +15,19 @@
   }
 }
 
+@theme {
+  --font-apfel: var(--font-apfel-grotezk);
+  --font-apfel-fett: var(--font-apfel-grotezk-fett);
+  --font-apfel-mittel: var(--font-apfel-grotezk-mittel);
+
+  --font-momo: var(--font-momo-trust-display);
+  --font-patua: var(--font-patua-one);
+  --font-protest: var(--font-protest-strike);
+  --font-sketchup: var(--font-sketchup);
+}
+
 body {
+  font-family: var(--font-apfel-grotezk);
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,

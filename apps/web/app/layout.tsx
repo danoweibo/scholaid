@@ -5,6 +5,15 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { LenisProvider } from "@/providers/lenis";
 import { ThemeProvider } from "@/providers/theme";
+import {
+  apfelGrotezk,
+  apfelGrotezkFett,
+  apfelGrotezkMittel,
+  momoTrustDisplay,
+  patuaOne,
+  protestStrike,
+  sketchup,
+} from "@/lib/fonts";
 /* import { GooeyToaster } from "@/providers/toaster"; */
 
 const geist = Geist({ subsets: ["latin"] });
@@ -21,7 +30,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={geist.className}>
+      <body
+        className={` ${apfelGrotezk.variable} ${apfelGrotezkFett.variable} ${apfelGrotezkMittel.variable} ${momoTrustDisplay.variable} ${patuaOne.variable} ${protestStrike.variable} ${sketchup.variable} antialiased`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
