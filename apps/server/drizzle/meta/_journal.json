@@ -15,6 +15,13 @@
       "when": 1778155373529,
       "tag": "0001_config_auth_roles",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1778156930570,
+      "tag": "0002_better_auth_fields",
+      "breakpoints": true
     }
   ]
 }
