@@ -73,10 +73,16 @@ export const user = pgTable('user', {
   email: text('email').notNull().unique(),
   emailVerified: boolean('email_verified').notNull().default(false),
   image: text('image'),
+  // Owned by the better-auth admin plugin. Values: 'user' | 'admin'.
+  // Do NOT use this for student/lecturer/institution — that is scholaidRole.
+  role: text('role').notNull().default('user'),
+  // Application-level entity type: 'student' | 'lecturer' | 'institution'
+  // Named differently from `role` to avoid collision with the admin plugin.
+  scholaidRole: text('scholaid_role').notNull().default('student'),
+  // Only populated when scholaidRole === 'institution'
+  institutionName: text('institution_name'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
-  role: text('role').notNull().default('student'),
-  institutionName: text('institution_name'),
 });
 
 export const session = pgTable('session', {
