@@ -3,7 +3,7 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { openAPI, admin } from 'better-auth/plugins';
 import { db } from '@/db';
 import * as schema from '@/db/schema';
-import { createUserProfileHook } from './hooks/create-user-profile.hook';
+import { createUserProfileHook } from '@/auth/hooks/create-user-profile.hook';
 
 export const auth = betterAuth({
   basePath: '/api/auth',
@@ -17,10 +17,20 @@ export const auth = betterAuth({
 
   user: {
     additionalFields: {
-      role: {
-        type: 'string',
+      // `scholaidRole` differentiates student / lecturer / institution.
+      // Named differently from `role` to avoid collision with the admin
+      // plugin which owns the `role` field on the user table.
+      scholaidRole: {
+        type: 'string' as const,
         required: true,
-        input: true, // allows it to be passed in the sign-up body
+        input: true,
+        defaultValue: 'student',
+      },
+      // Only used when scholaidRole === 'institution'
+      institutionName: {
+        type: 'string' as const,
+        required: false,
+        input: true,
       },
     },
   },
@@ -28,6 +38,7 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         after: createUserProfileHook as (
           user: Record<string, unknown>,
         ) => Promise<void>,
@@ -65,7 +76,18 @@ export const auth = betterAuth({
     },
   },
 
-  plugins: [openAPI(), admin()],
+  plugins: [
+    openAPI(),
+    // The admin plugin manages the `role` field on the user table.
+    // `defaultRole` is what every new signup gets.
+    // `adminRoles` are the roles that can access admin endpoints —
+    // set a user's role to 'admin' via POST /api/auth/admin/set-role
+    // to grant system-operator access (developer / you).
+    admin({
+      defaultRole: 'user',
+      adminRoles: ['admin'],
+    }),
+  ],
 });
 
 export type Auth = typeof auth;
