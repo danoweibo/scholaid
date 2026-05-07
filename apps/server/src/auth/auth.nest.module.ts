@@ -25,7 +25,7 @@ import { auth } from '@/auth/auth';
     // AuthService gives controllers type-safe access to better-auth's API
     {
       provide: AuthService,
-      useValue: new AuthService(auth),
+      useValue: new AuthService({ auth }),
     },
     // ScholaidRoleGuard runs globally after the better-auth AuthGuard
     {
