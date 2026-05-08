@@ -5,7 +5,7 @@ import {
   ForbiddenException,
   ConflictException,
 } from '@nestjs/common';
-import { eq, and, inArray } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { DBService } from '@/db/db.service';
 import { MailService } from '@/mail/mail.service';
 import {
@@ -413,7 +413,7 @@ export class InstitutionsService {
     await this.db.db
       .update(lecturers)
       .set({
-        status: newStatus as typeof lecturer.status,
+        status: newStatus,
         institutionId: null,
         institutionConnection: null,
         updatedAt: new Date(),

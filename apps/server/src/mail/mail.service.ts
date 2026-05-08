@@ -60,89 +60,6 @@ export class MailService {
     const { error } = await this.resend.emails.send({
       from: this.from,
       to,
-      subject: `You are now connected to ${institutionName} on Scholaid`,
-      html: `
-        <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
-          <h2>Connection approved</h2>
-          <p>Hi ${lecturerName}, your connection request to <strong>${institutionName}</strong> has been approved.</p>
-          <p>You are now a verified lecturer under that institution. Your students will be linked automatically.</p>
-        </div>
-      `,
-    });
-    if (error) this.logger.error('Failed to send connection approved email', error);
-  }
-
-  async sendLecturerConnectionInvite({
-    to,
-    lecturerName,
-    institutionName,
-    requestId,
-  }: {
-    to: string;
-    lecturerName: string;
-    institutionName: string;
-    requestId: string;
-  }): Promise<void> {
-    const acceptUrl = `${this.appUrl}/institutions/requests/${requestId}/accept`;
-    const { error } = await this.resend.emails.send({
-      from: this.from,
-      to,
-      subject: `${institutionName} wants to connect with you on Scholaid`,
-      html: `
-        <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
-          <h2>Institution connection invite</h2>
-          <p>Hi ${lecturerName}, <strong>${institutionName}</strong> has invited you to connect as a verified lecturer.</p>
-          <a href="${acceptUrl}" style="display:inline-block;padding:12px 24px;background:#1a1a1a;color:#fff;text-decoration:none;border-radius:6px;margin:16px 0;">
-            Accept Connection
-          </a>
-          <p style="color:#666;font-size:13px;">If you weren't expecting this, you can safely ignore this email.</p>
-        </div>
-      `,
-    });
-    if (error) this.logger.error('Failed to send connection invite email', error);
-  }
-
-  async sendStudentUnlinkedNotification({
-    to,
-    studentName,
-    institutionName,
-    lecturerName,
-  }: {
-    to: string;
-    studentName: string;
-    institutionName: string;
-    lecturerName: string;
-  }): Promise<void> {
-    const { error } = await this.resend.emails.send({
-      from: this.from,
-      to,
-      subject: `Your institution membership at ${institutionName} requires attention`,
-      html: `
-        <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
-          <h2>Membership update</h2>
-          <p>Hi ${studentName},</p>
-          <p>Your lecturer <strong>${lecturerName}</strong> is no longer connected to <strong>${institutionName}</strong>.</p>
-          <p>Since they were your only lecturer at that institution, your membership has been unlinked.</p>
-          <p>To restore full membership, please verify your matric number directly with the institution.</p>
-        </div>
-      `,
-    });
-    if (error) this.logger.error('Failed to send student unlinked notification', error);
-  }
-}
-
-  async sendLecturerConnectionApproved({
-    to,
-    lecturerName,
-    institutionName,
-  }: {
-    to: string;
-    lecturerName: string;
-    institutionName: string;
-  }): Promise<void> {
-    const { error } = await this.resend.emails.send({
-      from: this.from,
-      to,
       subject: `Your connection to ${institutionName} has been approved`,
       html: `
         <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
@@ -152,7 +69,8 @@ export class MailService {
         </div>
       `,
     });
-    if (error) this.logger.error(`Failed to send connection approval to ${to}`, error);
+    if (error)
+      this.logger.error(`Failed to send connection approval to ${to}`, error);
   }
 
   async sendLecturerConnectionInvite({
@@ -167,6 +85,7 @@ export class MailService {
     requestId: string;
   }): Promise<void> {
     const acceptUrl = `${this.appUrl}/institutions/requests/${requestId}/accept`;
+
     const { error } = await this.resend.emails.send({
       from: this.from,
       to,
@@ -184,7 +103,8 @@ export class MailService {
         </div>
       `,
     });
-    if (error) this.logger.error(`Failed to send connection invite to ${to}`, error);
+    if (error)
+      this.logger.error(`Failed to send connection invite to ${to}`, error);
   }
 
   async sendStudentUnlinkedNotification({
@@ -212,6 +132,7 @@ export class MailService {
         </div>
       `,
     });
-    if (error) this.logger.error(`Failed to send unlink notification to ${to}`, error);
+    if (error)
+      this.logger.error(`Failed to send unlink notification to ${to}`, error);
   }
 }
