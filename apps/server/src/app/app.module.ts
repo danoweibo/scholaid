@@ -8,6 +8,7 @@ import { AuthNestModule } from '@/auth/auth.nest.module';
 import { MailModule } from '@/mail/mail.module';
 import { UsersModule } from '@/users/users.module';
 import { InvitesModule } from '@/invites/invites.module';
+import { InstitutionsModule } from '@/institutions/institutions.module';
 import { auth } from '@/auth/auth';
 
 @Module({
@@ -19,6 +20,7 @@ import { auth } from '@/auth/auth';
     MailModule,
     UsersModule,
     InvitesModule,
+    InstitutionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
