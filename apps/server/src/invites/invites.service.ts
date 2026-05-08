@@ -6,7 +6,7 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import { eq, and, or } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { DBService } from '@/db/db.service';
 import { MailService } from '@/mail/mail.service';
 import {

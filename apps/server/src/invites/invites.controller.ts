@@ -6,7 +6,10 @@ import {
 } from '@thallesp/nestjs-better-auth';
 import { ScholaidRoles } from '@/auth/decorators/scholaid-role.decorator';
 import type { ScholaidSession } from '@/auth/types/session.types';
-import { InvitesService, DispatchInviteDto } from '@/invites/invites.service';
+import {
+  InvitesService,
+  type DispatchInviteDto,
+} from '@/invites/invites.service';
 
 @Controller('invites')
 export class InvitesController {

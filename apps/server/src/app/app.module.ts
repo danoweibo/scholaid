@@ -5,25 +5,20 @@ import { AppController } from '@/app/app.controller';
 import { AppService } from '@/app/app.service';
 import { DBModule } from '@/db/db.module';
 import { AuthNestModule } from '@/auth/auth.nest.module';
+import { MailModule } from '@/mail/mail.module';
 import { UsersModule } from '@/users/users.module';
+import { InvitesModule } from '@/invites/invites.module';
 import { auth } from '@/auth/auth';
 
 @Module({
   imports: [
-    // Env vars — global so ConfigService works anywhere in the DI tree
     ConfigModule.forRoot({ isGlobal: true }),
-
-    // Drizzle db instance — global so any module can inject DBService
     DBModule,
-
-    // better-auth HTTP handler + global AuthGuard (all routes protected by default)
     AuthModule.forRoot({ auth }),
-
-    // Scholaid auth layer: AuthService + ScholaidRoleGuard (global APP_GUARD)
     AuthNestModule,
-
-    // Feature modules
+    MailModule,
     UsersModule,
+    InvitesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
