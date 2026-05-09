@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { openAPI, admin } from 'better-auth/plugins';
@@ -38,7 +39,6 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         after: createUserProfileHook as (
           user: Record<string, unknown>,
         ) => Promise<void>,
@@ -46,11 +46,13 @@ export const auth = betterAuth({
     },
   },
 
-  trustedOrigins: [
-    'http://scholaid.local:5000',
-    'http://localhost:3000',
-    'http://localhost:5000',
-  ],
+  // trustedOrigins controls CORS for ALL routes — the nestjs-better-auth
+  // wrapper registers @fastify/cors globally using this list.
+  // Do NOT call app.enableCors() alongside this — it double-registers the plugin.
+  trustedOrigins: (process.env.ALLOWED_ORIGINS ?? 'http://scholaid.local:5000')
+    .split(',')
+    .map((o) => o.trim())
+    .filter(Boolean),
 
   emailAndPassword: {
     enabled: true,
