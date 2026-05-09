@@ -25,14 +25,14 @@ import type { ScholaidSession } from '@/auth/types/session.types';
 
 export class LecturerConnectDto {
   /** Public-facing institution ID e.g. "INST-00001" */
-  institutionId: string;
-  staffEmailDomain: string;
-  employeeId: string;
+  institutionId!: string;
+  staffEmailDomain!: string;
+  employeeId!: string;
 }
 
 export class InstitutionInviteLecturerDto {
   /** Public-facing lecturer ID e.g. "LEC-00001" */
-  lecturerId: string;
+  lecturerId!: string;
 }
 
 // ---------------------------------------------------------------------------
