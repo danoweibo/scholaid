@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   Injectable,
   BadRequestException,
@@ -26,14 +23,14 @@ import type { ScholaidSession } from '@/auth/types/session.types';
 // DTOs
 // ---------------------------------------------------------------------------
 
-export interface LecturerConnectDto {
+export class LecturerConnectDto {
   /** Public-facing institution ID e.g. "INST-00001" */
   institutionId: string;
   staffEmailDomain: string;
   employeeId: string;
 }
 
-export interface InstitutionInviteLecturerDto {
+export class InstitutionInviteLecturerDto {
   /** Public-facing lecturer ID e.g. "LEC-00001" */
   lecturerId: string;
 }

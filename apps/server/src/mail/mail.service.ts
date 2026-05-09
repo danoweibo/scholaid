@@ -12,7 +12,7 @@ export class MailService {
   constructor(private readonly config: ConfigService) {
     this.resend = new Resend(this.config.getOrThrow<string>('RESEND_API_KEY'));
     this.from = this.config.getOrThrow<string>('RESEND_FROM');
-    this.appUrl = this.config.getOrThrow<string>('APP_URL');
+    this.appUrl = this.config.getOrThrow<string>('BASE_URL');
   }
 
   async sendStudentInvite({
