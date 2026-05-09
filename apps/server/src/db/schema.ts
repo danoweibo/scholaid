@@ -61,6 +61,18 @@ export const matricVerificationStatusEnum = pgEnum(
   ['pending', 'approved', 'rejected'],
 );
 
+export const connectionRequestStatusEnum = pgEnum('connection_request_status', [
+  'pending',
+  'approved',
+  'rejected',
+  'cancelled',
+]);
+
+export const connectionRequestInitiatorEnum = pgEnum(
+  'connection_request_initiator',
+  ['lecturer', 'institution'],
+);
+
 // ---------------------------------------------------------------------------
 // Better-Auth core tables
 // Table names must be exactly: user, session, account, verification
@@ -254,6 +266,36 @@ export const invites = pgTable('invites', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
+/**
+ * Institution ↔ Lecturer connection requests.
+ * Handles both directions:
+ *   - lecturer-initiated: lecturer submits staffEmailDomain + employeeId
+ *   - institution-initiated: institution invites a lecturer by lecturerId
+ *
+ * Auto-connect shortcut: if a lecturer already has the institution as a
+ * `placeholder` when the institution's request arrives, the request is
+ * approved immediately without manual action.
+ */
+export const institutionLecturerRequests = pgTable(
+  'institution_lecturer_requests',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    lecturerId: uuid('lecturer_id')
+      .notNull()
+      .references(() => lecturers.id, { onDelete: 'cascade' }),
+    institutionId: uuid('institution_id')
+      .notNull()
+      .references(() => institutions.id, { onDelete: 'cascade' }),
+    initiator: connectionRequestInitiatorEnum('initiator').notNull(),
+    status: connectionRequestStatusEnum('status').notNull().default('pending'),
+    // Only populated on lecturer-initiated requests
+    staffEmailDomain: text('staff_email_domain'),
+    employeeId: text('employee_id'),
+    resolvedAt: timestamp('resolved_at'),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+  },
+);
+
 // ---------------------------------------------------------------------------
 // Relations (Drizzle relational query API)
 // ---------------------------------------------------------------------------
@@ -332,3 +374,17 @@ export const inviteRelations = relations(invites, ({ one }) => ({
     references: [lecturers.id],
   }),
 }));
+
+export const institutionLecturerRequestRelations = relations(
+  institutionLecturerRequests,
+  ({ one }) => ({
+    lecturer: one(lecturers, {
+      fields: [institutionLecturerRequests.lecturerId],
+      references: [lecturers.id],
+    }),
+    institution: one(institutions, {
+      fields: [institutionLecturerRequests.institutionId],
+      references: [institutions.id],
+    }),
+  }),
+);
