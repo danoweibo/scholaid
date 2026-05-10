@@ -2,35 +2,38 @@ import { Module, Global } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthService } from '@thallesp/nestjs-better-auth';
 import { ScholaidRoleGuard } from '@/auth/guards/scholaid-role.guard';
+import { CbtAccessGuard } from '@/auth/guards/cbt-access.guard';
+import { DBModule } from '@/db/db.module';
 import { auth } from '@/auth/auth';
 
 /**
- * AuthNestModule wires up Scholaid's auth layer:
+ * AuthNestModule wires up Scholaid's auth layer globally:
  *
- *  - Provides AuthService<typeof auth> so any controller can call
- *    better-auth's API methods (e.g. admin actions, session management)
- *    without importing the raw `auth` object.
+ *  - AuthService        → type-safe access to better-auth API methods
+ *  - ScholaidRoleGuard  → enforces @ScholaidRoles() on all routes
+ *  - CbtAccessGuard     → enforces @StandardStudentOnly() on CBT routes
  *
- *  - Registers ScholaidRoleGuard as a global APP_GUARD so @ScholaidRoles()
- *    works across all feature modules without re-importing this module.
- *    It runs after the global AuthGuard from @thallesp/nestjs-better-auth.
+ * Guard execution order (after the better-auth global AuthGuard):
+ *   1. ScholaidRoleGuard  — checks scholaidRole
+ *   2. CbtAccessGuard     — checks student.type === 'standard'
  *
- * Import this module once in AppModule alongside AuthModule.forRoot().
- * Do NOT import it in feature modules — the @Global() decorator makes
- * everything it provides available app-wide.
+ * Import once in AppModule. @Global() makes AuthService available everywhere.
  */
 @Global()
 @Module({
+  imports: [DBModule],
   providers: [
-    // AuthService gives controllers type-safe access to better-auth's API
     {
       provide: AuthService,
       useValue: new AuthService({ auth }),
     },
-    // ScholaidRoleGuard runs globally after the better-auth AuthGuard
     {
       provide: APP_GUARD,
       useClass: ScholaidRoleGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: CbtAccessGuard,
     },
   ],
   exports: [AuthService],
