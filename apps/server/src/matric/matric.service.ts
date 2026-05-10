@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/require-await */
 import {
@@ -19,12 +18,7 @@ import type { ScholaidSession } from '@/auth/types/session.types';
 // ---------------------------------------------------------------------------
 
 export class SubmitMatricDto {
-  @IsString()
-  @IsNotEmpty({ message: 'institutionId is required.' })
   institutionId!: string;
-
-  @IsString()
-  @IsNotEmpty({ message: 'matricNumber is required.' })
   matricNumber!: string;
 }
 

@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Patch, Param, Body } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param } from '@nestjs/common';
 import {
   Session,
   AllowAnonymous,
@@ -6,10 +6,7 @@ import {
 } from '@thallesp/nestjs-better-auth';
 import { ScholaidRoles } from '@/auth/decorators/scholaid-role.decorator';
 import type { ScholaidSession } from '@/auth/types/session.types';
-import {
-  InvitesService,
-  type DispatchInviteDto,
-} from '@/invites/invites.service';
+import { InvitesService, DispatchInviteDto } from '@/invites/invites.service';
 
 @Controller('invites')
 export class InvitesController {
@@ -17,8 +14,7 @@ export class InvitesController {
 
   /**
    * POST /invites
-   * Lecturer dispatches an invite to a student by email or studentId.
-   * Auth: lecturer only.
+   * Lecturer dispatches an invite.
    */
   @Post()
   @ScholaidRoles('lecturer')
@@ -31,8 +27,7 @@ export class InvitesController {
 
   /**
    * GET /invites/:token
-   * Public — frontend calls this when the student clicks the invite link
-   * to know the status and who sent it before showing the accept screen.
+   * Public — inspect invite status before accepting.
    */
   @Get(':token')
   @AllowAnonymous()
@@ -42,12 +37,8 @@ export class InvitesController {
 
   /**
    * POST /invites/:token/accept
-   * Accepts an invite. Uses OptionalAuth because:
-   *   - Authenticated student → enrol directly
-   *   - No account → return NO_ACCOUNT signal so frontend redirects to register
-   *
-   * After registration, the frontend should call this endpoint again with
-   * the student's new session to complete enrolment.
+   * Accept an invite by token.
+   * OptionalAuth — works for both authenticated students and anonymous users.
    */
   @Post(':token/accept')
   @OptionalAuth()
@@ -59,13 +50,12 @@ export class InvitesController {
   }
 
   /**
-   * PATCH /invites/:id/revoke
-   * Lecturer cancels a pending invite they sent.
-   * Auth: lecturer only.
+   * POST /invites/:token/revoke
+   * Lecturer revokes a pending invite by token.
    */
-  @Patch(':id/revoke')
+  @Post(':token/revoke')
   @ScholaidRoles('lecturer')
-  revoke(@Param('id') inviteId: string, @Session() session: ScholaidSession) {
-    return this.invitesService.revoke(inviteId, session);
+  revoke(@Param('token') token: string, @Session() session: ScholaidSession) {
+    return this.invitesService.revokeByToken(token, session);
   }
 }

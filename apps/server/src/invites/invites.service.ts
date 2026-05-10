@@ -1,11 +1,4 @@
 import {
-  IsEmail,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  MinLength,
-} from 'class-validator';
-import {
   Injectable,
   BadRequestException,
   NotFoundException,
@@ -31,27 +24,12 @@ import type { ScholaidSession } from '@/auth/types/session.types';
 // ---------------------------------------------------------------------------
 
 export class DispatchInviteDto {
-  /** Invite by email address OR by studentId — exactly one must be provided */
-  @IsOptional()
-  @IsEmail({}, { message: 'inviteeEmail must be a valid email address.' })
   inviteeEmail?: string;
-
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty({ message: 'inviteeStudentId must not be empty.' })
   inviteeStudentId?: string;
 }
 
 export class AcceptInviteDto {
-  /** Only required when the invitee has no existing account */
-  @IsOptional()
-  @IsString()
-  @MinLength(2, { message: 'name must be at least 2 characters.' })
   name?: string;
-
-  @IsOptional()
-  @IsString()
-  @MinLength(8, { message: 'password must be at least 8 characters.' })
   password?: string;
 }
 
@@ -74,7 +52,6 @@ export class InvitesService {
     session: ScholaidSession,
     dto: DispatchInviteDto,
   ): Promise<{ message: string; inviteId: string }> {
-    console.log('[dispatch] dto received:', JSON.stringify(dto));
     // Exactly one target must be provided
     if (!dto.inviteeEmail && !dto.inviteeStudentId) {
       throw new BadRequestException(
