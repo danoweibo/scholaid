@@ -1,38 +1,29 @@
 import { Controller, Get } from '@nestjs/common';
 import { Session, AllowAnonymous, Roles } from '@thallesp/nestjs-better-auth';
-import { ScholaidRoles, type ScholaidSession } from '@/auth';
+import { Throttle, SkipThrottle } from '@nestjs/throttler';
+import { ScholaidRoles } from '@/auth/decorators/scholaid-role.decorator';
+import type { ScholaidSession } from '@/auth/types/session.types';
 
-/**
- * UsersController demonstrates every layer of the protected route system.
- *
- * Default: all routes require authentication (global AuthGuard).
- *
- * Layers in order of execution:
- *   1. GlobalAuthGuard     — is there a valid session? (better-auth)
- *   2. ScholaidRoleGuard   — does the user have the right scholaidRole?
- *   3. @Roles()            — is the user a system admin? (admin plugin)
- */
 @Controller('users')
 export class UsersController {
   // -------------------------------------------------------------------------
-  // Public — no auth needed
+  // Public
   // -------------------------------------------------------------------------
 
   @Get('health')
   @AllowAnonymous()
+  @SkipThrottle()
   health() {
     return { status: 'ok' };
   }
 
   // -------------------------------------------------------------------------
-  // Authenticated — any signed-in user regardless of scholaidRole
+  // Authenticated — strict rate limit (session reads are lightweight but
+  // frequent polling from a frontend should be cached, not hammered)
   // -------------------------------------------------------------------------
 
-  /**
-   * Returns the full session for the current user.
-   * Useful for the frontend to know who is logged in and what type they are.
-   */
   @Get('me')
+  @Throttle({ default: { ttl: 60_000, limit: 30 } })
   getMe(@Session() session: ScholaidSession) {
     return {
       id: session.user.id,
@@ -44,7 +35,7 @@ export class UsersController {
   }
 
   // -------------------------------------------------------------------------
-  // Role-gated — scholaidRole must match
+  // Role-gated dashboards
   // -------------------------------------------------------------------------
 
   @Get('student/dashboard')
@@ -76,10 +67,6 @@ export class UsersController {
     };
   }
 
-  /**
-   * Lecturers and institution admins can both access this.
-   * Demonstrates multi-role gating.
-   */
   @Get('reports')
   @ScholaidRoles('lecturer', 'institution')
   getReports(@Session() session: ScholaidSession) {
@@ -90,7 +77,7 @@ export class UsersController {
   }
 
   // -------------------------------------------------------------------------
-  // System admin only — uses the admin plugin's `role` field, not scholaidRole
+  // System admin only
   // -------------------------------------------------------------------------
 
   @Get('admin/users')
