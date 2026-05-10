@@ -12,7 +12,7 @@ export class MailService {
   constructor(private readonly config: ConfigService) {
     this.resend = new Resend(this.config.getOrThrow<string>('RESEND_API_KEY'));
     this.from = this.config.getOrThrow<string>('RESEND_FROM');
-    this.appUrl = this.config.getOrThrow<string>('BASE_URL');
+    this.appUrl = this.config.getOrThrow<string>('APP_URL');
   }
 
   async sendStudentInvite({
@@ -105,6 +105,40 @@ export class MailService {
     });
     if (error)
       this.logger.error(`Failed to send connection invite to ${to}`, error);
+  }
+
+  async sendMatricVerificationOutcome({
+    to,
+    studentName,
+    institutionName,
+    outcome,
+  }: {
+    to: string;
+    studentName: string;
+    institutionName: string;
+    outcome: 'approved' | 'rejected';
+  }): Promise<void> {
+    const approved = outcome === 'approved';
+    const { error } = await this.resend.emails.send({
+      from: this.from,
+      to,
+      subject: approved
+        ? `Your membership at ${institutionName} has been approved`
+        : `Your membership application at ${institutionName} was not approved`,
+      html: `
+        <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
+          <h2>${approved ? 'Membership approved' : 'Membership not approved'}</h2>
+          <p>Hi ${studentName},</p>
+          ${
+            approved
+              ? `<p>Your matric number has been verified and you are now a full member of <strong>${institutionName}</strong>. You now have access to the CBT testing subdomain.</p>`
+              : `<p>Your matric number submission for <strong>${institutionName}</strong> could not be verified. Please contact the institution directly for assistance.</p>`
+          }
+        </div>
+      `,
+    });
+    if (error)
+      this.logger.error(`Failed to send matric outcome email to ${to}`, error);
   }
 
   async sendStudentUnlinkedNotification({

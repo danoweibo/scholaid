@@ -11,6 +11,7 @@ import { MailModule } from '@/mail/mail.module';
 import { UsersModule } from '@/users/users.module';
 import { InvitesModule } from '@/invites/invites.module';
 import { InstitutionsModule } from '@/institutions/institutions.module';
+import { MatricModule } from '@/matric/matric.module';
 import { auth } from '@/auth/auth';
 
 @Module({
@@ -48,6 +49,7 @@ import { auth } from '@/auth/auth';
     UsersModule,
     InvitesModule,
     InstitutionsModule,
+    MatricModule,
   ],
   controllers: [AppController],
   providers: [
