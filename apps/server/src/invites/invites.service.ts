@@ -74,6 +74,7 @@ export class InvitesService {
     session: ScholaidSession,
     dto: DispatchInviteDto,
   ): Promise<{ message: string; inviteId: string }> {
+    console.log('[dispatch] dto received:', JSON.stringify(dto));
     // Exactly one target must be provided
     if (!dto.inviteeEmail && !dto.inviteeStudentId) {
       throw new BadRequestException(

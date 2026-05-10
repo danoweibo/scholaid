@@ -43,7 +43,13 @@ import { auth } from '@/auth/auth';
     ]),
 
     DBModule,
-    AuthModule.forRoot({ auth }),
+    AuthModule.forRoot({
+      auth,
+      bodyParser: {
+        json: { enabled: true },
+        urlencoded: { enabled: false },
+      },
+    }),
     AuthNestModule,
     MailModule,
     UsersModule,

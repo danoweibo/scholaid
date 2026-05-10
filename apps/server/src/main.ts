@@ -17,36 +17,17 @@ async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
-    {
-      bodyParser: false,
-    },
+    { bodyParser: false },
   );
 
-  // ---------------------------------------------------------------------------
-  // Global exception filter
-  // Catches all unhandled exceptions and returns clean JSON.
-  // Stack traces are logged server-side only — never sent to the client.
-  // ---------------------------------------------------------------------------
   app.useGlobalFilters(new GlobalExceptionFilter());
 
-  // ---------------------------------------------------------------------------
-  // Global validation pipe
-  // Validates and transforms all incoming request bodies against DTO classes.
-  //
-  // whitelist: true         — strips properties not declared in the DTO
-  // forbidNonWhitelisted    — throws 400 if unknown properties are sent
-  // transform: true         — auto-converts payload types (string "1" → number 1)
-  // transformOptions        — enables plain-to-class conversion without @Type()
-  //                           on every property
-  // ---------------------------------------------------------------------------
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
-      forbidNonWhitelisted: true,
+      forbidNonWhitelisted: false,
       transform: true,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
+      transformOptions: { enableImplicitConversion: true },
     }),
   );
 
