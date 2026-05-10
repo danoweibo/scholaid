@@ -1,3 +1,4 @@
+import { IsNotEmpty, IsString, Matches } from 'class-validator';
 import {
   Injectable,
   BadRequestException,
@@ -25,13 +26,32 @@ import type { ScholaidSession } from '@/auth/types/session.types';
 
 export class LecturerConnectDto {
   /** Public-facing institution ID e.g. "INST-00001" */
+  @IsString()
+  @IsNotEmpty({ message: 'institutionId is required.' })
+  @Matches(/^INST-\d{5}$/, {
+    message: 'institutionId must be in the format INST-XXXXX.',
+  })
   institutionId!: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'staffEmailDomain is required.' })
+  @Matches(/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
+    message: 'staffEmailDomain must be a valid domain (e.g. university.edu).',
+  })
   staffEmailDomain!: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'employeeId is required.' })
   employeeId!: string;
 }
 
 export class InstitutionInviteLecturerDto {
   /** Public-facing lecturer ID e.g. "LEC-00001" */
+  @IsString()
+  @IsNotEmpty({ message: 'lecturerId is required.' })
+  @Matches(/^LEC-\d{5}$/, {
+    message: 'lecturerId must be in the format LEC-XXXXX.',
+  })
   lecturerId!: string;
 }
 

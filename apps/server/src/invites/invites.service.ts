@@ -1,4 +1,11 @@
 import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
+import {
   Injectable,
   BadRequestException,
   NotFoundException,
@@ -23,15 +30,28 @@ import type { ScholaidSession } from '@/auth/types/session.types';
 // DTOs (inline — move to separate files once the project grows)
 // ---------------------------------------------------------------------------
 
-export interface DispatchInviteDto {
+export class DispatchInviteDto {
   /** Invite by email address OR by studentId — exactly one must be provided */
+  @IsOptional()
+  @IsEmail({}, { message: 'inviteeEmail must be a valid email address.' })
   inviteeEmail?: string;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty({ message: 'inviteeStudentId must not be empty.' })
   inviteeStudentId?: string;
 }
 
-export interface AcceptInviteDto {
+export class AcceptInviteDto {
   /** Only required when the invitee has no existing account */
+  @IsOptional()
+  @IsString()
+  @MinLength(2, { message: 'name must be at least 2 characters.' })
   name?: string;
+
+  @IsOptional()
+  @IsString()
+  @MinLength(8, { message: 'password must be at least 8 characters.' })
   password?: string;
 }
 
@@ -391,5 +411,47 @@ export class InvitesService {
       .update(invites)
       .set({ status: 'accepted', acceptedAt: new Date() })
       .where(eq(invites.id, inviteId));
+  }
+
+  // -------------------------------------------------------------------------
+  // Revoke by token — used by the controller (token comes from the invite email)
+  // -------------------------------------------------------------------------
+
+  async revokeByToken(
+    token: string,
+    session: ScholaidSession,
+  ): Promise<{ message: string }> {
+    const [lecturer] = await this.db.db
+      .select({ id: lecturers.id })
+      .from(lecturers)
+      .where(eq(lecturers.userId, session.user.id));
+
+    if (!lecturer) {
+      throw new ForbiddenException('Lecturer profile not found.');
+    }
+
+    const [invite] = await this.db.db
+      .select()
+      .from(invites)
+      .where(
+        and(eq(invites.token, token), eq(invites.lecturerId, lecturer.id)),
+      );
+
+    if (!invite) {
+      throw new NotFoundException('Invite not found.');
+    }
+
+    if (invite.status !== 'pending') {
+      throw new BadRequestException(
+        `Cannot revoke an invite with status "${invite.status}".`,
+      );
+    }
+
+    await this.db.db
+      .update(invites)
+      .set({ status: 'revoked' })
+      .where(eq(invites.id, invite.id));
+
+    return { message: 'Invite revoked.' };
   }
 }
