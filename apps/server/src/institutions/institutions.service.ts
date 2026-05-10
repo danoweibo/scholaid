@@ -220,10 +220,14 @@ export class InstitutionsService {
       );
     }
 
-    // Auto-connect shortcut — lecturer already has this institution as placeholder
+    // Auto-connect shortcut — lecturer already declared or requested this institution.
+    // Fires for both 'placeholder' (declared without credentials) and 'pending'
+    // (submitted credentials, awaiting approval). In both cases the intent is clear
+    // and the institution initiating confirms the match from their side.
     if (
       lecturer.institutionId === institution.id &&
-      lecturer.institutionConnection === 'placeholder'
+      (lecturer.institutionConnection === 'placeholder' ||
+        lecturer.institutionConnection === 'pending')
     ) {
       await this.establishConnection(lecturer.id, institution.id);
 
