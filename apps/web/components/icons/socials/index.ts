@@ -1,5 +1,5 @@
-export { XIcon } from "@/components/icons/socials/x";
-export { YouTubeIcon } from "@/components/icons/socials/youtube";
-export { DiscordIcon } from "@/components/icons/socials/discord";
-export { WhatsAppIcon } from "@/components/icons/socials/whatsapp";
-export { LinkedInIcon } from "@/components/icons/socials/linkedin";
+export { XIcon } from "./x";
+export { YouTubeIcon } from "./youtube";
+export { DiscordIcon } from "./discord";
+export { WhatsAppIcon } from "./whatsapp";
+export { LinkedInIcon } from "./linkedin";

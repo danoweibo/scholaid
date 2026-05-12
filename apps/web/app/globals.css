@@ -32,6 +32,6 @@
     @apply bg-background;
   }
   html {
-    @apply font-apfel-grotezk;
+    @apply font-apfel;
   }
 }
