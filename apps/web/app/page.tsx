@@ -1,4 +1,5 @@
 // apps/web/app/page.tsx
+import { HeroSlider } from "@/blocks/hero/hero";
 import { Navbar } from "@/blocks/navbar";
 
 export default function HomePage() {
@@ -7,6 +8,7 @@ export default function HomePage() {
       <header className="sticky top-0 z-50 px-6 pt-6">
         <Navbar />
       </header>
+      <HeroSlider />
     </main>
   );
 }
