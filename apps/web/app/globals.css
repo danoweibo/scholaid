@@ -4,6 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Colors */
+  --color-background: var(--background);
   /* Fonts */
   --font-apfel: var(--font-apfel-grotezk);
   --font-apfel-fett: var(--font-apfel-grotezk-fett);
@@ -22,6 +24,14 @@
   /* --background: #f0f2f5; */
 }
 
-body {
-  font-family: var(--font-apfel-grotezk);
+@layer base {
+  body {
+    background: var(--background);
+    font-family: var(--font-apfel-grotezk);
+    -webkit-font-smoothing: antialiased;
+    @apply bg-background;
+  }
+  html {
+    @apply font-apfel-grotezk;
+  }
 }
