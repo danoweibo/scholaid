@@ -14,6 +14,14 @@
   --font-sketchup: var(--font-sketchup);
 }
 
+:root {
+  --background: #f0f2f5;
+}
+
+.dark {
+  /* --background: #f0f2f5; */
+}
+
 body {
   font-family: var(--font-apfel-grotezk);
 }
