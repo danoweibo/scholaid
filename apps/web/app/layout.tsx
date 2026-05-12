@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Noto_Sans, Instrument_Sans } from "next/font/google";
 import "@scholaid/ui/styles.css";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
@@ -14,6 +14,16 @@ import {
   protestStrike,
   sketchup,
 } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
+import { TooltipProvider } from "@/components/ui/tooltip";
+
+const instrumentSansHeading = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-heading",
+});
+
+const notoSans = Noto_Sans({ subsets: ["latin"], variable: "--font-sans" });
+
 /* import { GooeyToaster } from "@/providers/toaster"; */
 
 const geist = Geist({ subsets: ["latin"] });
@@ -29,7 +39,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(
+        "font-sans",
+        notoSans.variable,
+        instrumentSansHeading.variable,
+      )}
+    >
       <body
         className={` ${apfelGrotezk.variable} ${apfelGrotezkFett.variable} ${apfelGrotezkMittel.variable} ${momoTrustDisplay.variable} ${patuaOne.variable} ${protestStrike.variable} ${sketchup.variable} antialiased`}
       >
@@ -39,7 +57,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LenisProvider>{children}</LenisProvider>
+          <TooltipProvider>
+            <LenisProvider>{children}</LenisProvider>
+          </TooltipProvider>
           {/* <GooeyToaster /> */}
         </ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
