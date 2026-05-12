@@ -8,7 +8,7 @@ import {
   CloudIcon,
   TeamIcon,
   CodeIcon,
-  CoinIcon,
+  DollarIcon,
 } from "@/components/icons/base";
 
 const DESKTOP_PATH =
@@ -22,7 +22,7 @@ const navLinks = [
   { label: "Resources", icon: CloudIcon },
   { label: "Community", icon: TeamIcon },
   { label: "Developer", icon: CodeIcon },
-  { label: "Pricing", icon: CoinIcon },
+  { label: "Pricing", icon: DollarIcon },
 ];
 
 export function Navbar() {
@@ -61,15 +61,15 @@ export function Navbar() {
             />
           </Link>
 
-          {/* Navigation */}
-          <ul className="hidden items-center gap-1 md:flex">
+          {/* Navigation — pulled left closer to logo via mr-auto + ml-6 */}
+          <ul className="mr-auto ml-6 hidden items-center gap-1 md:flex">
             {navLinks.map(({ label, icon: Icon }) => (
               <li key={label}>
                 <Link
                   href="#"
                   className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white"
                 >
-                  <Icon className="h-3.5 w-3.5" />
+                  <Icon className="h-4 w-4" />
                   {label}
                 </Link>
               </li>
@@ -79,20 +79,20 @@ export function Navbar() {
           {/* Actions */}
           <div className="hidden items-center gap-2 md:flex">
             <Link
-              href="#"
+              href="/signin"
               className="px-3 py-1.5 text-sm font-medium text-white/70 transition-colors hover:text-white"
             >
               Sign in
             </Link>
             <Link
-              href="#"
+              href="/signup"
               className="rounded-md border border-white/20 px-3 py-1.5 text-sm font-medium text-white/80 transition-colors hover:border-white/40 hover:text-white"
             >
               Sign up
             </Link>
             <Link
               href="#"
-              className="rounded-md bg-white px-4 py-1.5 text-sm font-semibold text-[#19324D] transition-colors hover:bg-white/90"
+              className="cursor-pointer rounded-lg border-b-[4px] border-gray-400 bg-gray-50 px-6 py-2 text-sm font-semibold text-[#19324D] transition-all hover:-translate-y-[1px] hover:border-b-[6px] hover:brightness-110 active:translate-y-[2px] active:border-b-[2px] active:brightness-90"
             >
               Book a demo
             </Link>
