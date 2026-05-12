@@ -32,7 +32,7 @@ const PUBLIC_PATHS = [
 
 const SESSION_COOKIE_NAME = "better-auth.session_token";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Allow public paths through
