@@ -2,8 +2,11 @@
 
 import { LoginForm } from "@/components/login-form";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function LoginPage() {
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -25,11 +28,36 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-      <div className="bg-muted relative hidden lg:block">
-        <img
-          src="/placeholder.svg"
-          alt="Imagesss"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+
+      {/* Right panel — video with shimmer fallback */}
+      <div className="bg-muted relative hidden overflow-hidden lg:block">
+        {/* Shimmer overlay — visible until video is ready */}
+        {!videoLoaded && (
+          <div className="bg-muted absolute inset-0 z-10 overflow-hidden">
+            <div
+              className="absolute inset-0 -translate-x-full"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%)",
+                animation: "shimmer 1.5s linear infinite",
+              }}
+            />
+          </div>
+        )}
+
+        {/* Video — 720×720, centered, covers the panel */}
+        <video
+          src="/visuals/square.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          width={720}
+          height={720}
+          onCanPlay={() => setVideoLoaded(true)}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+            videoLoaded ? "opacity-100" : "opacity-0"
+          }`}
         />
       </div>
     </div>

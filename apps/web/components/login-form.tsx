@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,24 +13,77 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { GoogleIcon } from "./icons/socials";
+import { signIn, getSession } from "@/lib/auth/auth";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    const result = await signIn.email({ email, password });
+
+    if (result.error) {
+      setError(result.error.message ?? "Sign in failed. Please try again.");
+      setLoading(false);
+      return;
+    }
+
+    // Fetch session to determine scholaidRole for routing
+    const session = await getSession();
+    const scholaidRole = session?.data?.user?.scholaidRole;
+
+    if (scholaidRole === "student") router.push("/student");
+    else if (scholaidRole === "lecturer") router.push("/lecturer");
+    else if (scholaidRole === "institution") router.push("/institution");
+    else router.push("/dashboard");
+
+    setLoading(false);
+  }
+
   return (
-    <form className={cn("flex flex-col gap-6", className)} {...props}>
+    <form
+      className={cn("flex flex-col gap-6", className)}
+      onSubmit={handleSubmit}
+      {...props}
+    >
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="text-2xl font-bold">Signin to your account</h1>
+          <h1 className="text-2xl font-bold">Sign in to your account</h1>
           <p className="text-muted-foreground text-sm text-balance">
-            Enter your email below to login to your account
+            Enter your email below to log in to your account
           </p>
         </div>
+
+        {/* Error message */}
+        {error && (
+          <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-center text-sm text-red-500">
+            {error}
+          </p>
+        )}
+
         <Field>
           <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input
+            id="email"
+            type="email"
+            placeholder="m@example.com"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
+          />
         </Field>
+
         <Field>
           <div className="flex items-center">
             <FieldLabel htmlFor="password">Password</FieldLabel>
@@ -37,14 +94,26 @@ export function LoginForm({
               Forgot your password?
             </a>
           </div>
-          <Input id="password" type="password" required />
+          <Input
+            id="password"
+            type="password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
+          />
         </Field>
+
         <Field>
-          <Button type="submit">Login</Button>
+          <Button type="submit" disabled={loading}>
+            {loading ? "Signing in..." : "Login"}
+          </Button>
         </Field>
+
         <FieldSeparator>Or continue with</FieldSeparator>
+
         <Field>
-          <Button variant="outline" type="button">
+          <Button variant="outline" type="button" disabled={loading}>
             <GoogleIcon className="mr-1 h-6 w-6" />
             Login with Google
           </Button>
