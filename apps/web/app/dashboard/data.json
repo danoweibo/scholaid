@@ -13,7 +13,7 @@
     "assessment": "Linear Algebra and Computational Methods - Homework",
     "code": "MTH 301",
     "status": "Awaiting submission",
-    "score": 24,
+    "score": 0,
     "target": 27,
     "student": "Temi Adebayo"
   },
@@ -31,7 +31,7 @@
     "assessment": "Probability Theory and Statistics - Exercise",
     "code": "STT 307",
     "status": "Awaiting submission",
-    "score": 18,
+    "score": 0,
     "target": 22,
     "student": "Chimaka Ugwe"
   },
@@ -58,7 +58,7 @@
     "assessment": "Computer Networks and Security - Test",
     "code": "CSC 402",
     "status": "Awaiting submission",
-    "score": 16,
+    "score": 0,
     "target": 25,
     "student": "Mary Okafor"
   },
@@ -85,7 +85,7 @@
     "assessment": "Artificial Intelligence Fundamentals - Project",
     "code": "CSC 402",
     "status": "Awaiting submission",
-    "score": 12,
+    "score": 0,
     "target": 22,
     "student": "Grace Edet"
   },
@@ -103,7 +103,7 @@
     "assessment": "Operating Systems Architecture - Homework",
     "code": "CSC 205",
     "status": "Awaiting submission",
-    "score": 14,
+    "score": 0,
     "target": 20,
     "student": "Chioma Nnamdi"
   },
@@ -121,7 +121,7 @@
     "assessment": "Theory of Computation - Exercise",
     "code": "CSC 303",
     "status": "Awaiting submission",
-    "score": 19,
+    "score": 0,
     "target": 25,
     "student": "Fatima Musa"
   },
@@ -148,7 +148,7 @@
     "assessment": "Advanced Calculus and Differential Equations - Test",
     "code": "MTH 403",
     "status": "Awaiting submission",
-    "score": 17,
+    "score": 0,
     "target": 22,
     "student": "Bisola Aderemi"
   },
@@ -166,7 +166,7 @@
     "assessment": "Statistical Computing and Visualization - Exercise",
     "code": "STT 409",
     "status": "Awaiting submission",
-    "score": 20,
+    "score": 0,
     "target": 25,
     "student": "Ovie Efe"
   },
@@ -184,7 +184,7 @@
     "assessment": "Compiler Design and Language Processing - Homework",
     "code": "CSC 402",
     "status": "Awaiting submission",
-    "score": 15,
+    "score": 0,
     "target": 20,
     "student": "Yusuf Garba"
   },
@@ -211,7 +211,7 @@
     "assessment": "Software Testing and Quality Assurance - Exercise",
     "code": "CSC 205",
     "status": "Awaiting submission",
-    "score": 13,
+    "score": 0,
     "target": 20,
     "student": "Tosin Adeyemi"
   },
@@ -238,7 +238,7 @@
     "assessment": "Numerical Methods and Scientific Computing - Homework",
     "code": "MTH 403",
     "status": "Awaiting submission",
-    "score": 18,
+    "score": 0,
     "target": 25,
     "student": "Yetunde Balogun"
   },
@@ -256,7 +256,7 @@
     "assessment": "Database Administration and Security - Exercise",
     "code": "CSC 303",
     "status": "Awaiting submission",
-    "score": 11,
+    "score": 0,
     "target": 22,
     "student": "Hadiza Suleiman"
   },

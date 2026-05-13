@@ -275,7 +275,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
 
     cell: () => (
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger>
           <Button variant="ghost" size="icon" className="size-8">
             <HugeiconsIcon icon={MoreVerticalCircle01Icon} strokeWidth={2} />
           </Button>
