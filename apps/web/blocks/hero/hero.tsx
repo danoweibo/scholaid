@@ -70,9 +70,9 @@ const IMG_ANIMATE = { opacity: 1, scale: 1, x: 0, y: 0, rotate: 0 };
 const slides: SlideData[] = [
   {
     id: 0,
-    tag: "Featured",
-    title: "The Future\nof Interface",
-    sub: "Crafting digital experiences that blur the line between design and technology.",
+    tag: "Learning",
+    title: "Smarter\nLearning Paths",
+    sub: "Empowering students with intelligent learning experiences designed for growth, mastery, and academic excellence.",
     bg: "linear-gradient(135deg, #0a3a6e 0%, #0d5499 45%, #0b6e8a 100%)",
     glow: "radial-gradient(ellipse 60% 55% at 80% 15%, rgba(0,210,230,0.28) 0%, transparent 70%)",
     accent: "#00d4e8",
@@ -83,9 +83,9 @@ const slides: SlideData[] = [
   },
   {
     id: 1,
-    tag: "Design",
-    title: "Motion\nThat Speaks",
-    sub: "Every pixel animated with purpose. Every transition tells a story worth feeling.",
+    tag: "Analytics",
+    title: "Track\nPerformance",
+    sub: "Monitor academic progress with powerful insights, predictive analytics, and real-time student performance tracking.",
     bg: "linear-gradient(135deg, #0e3d6a 0%, #145c96 40%, #0e6d8c 100%)",
     glow: "radial-gradient(ellipse 55% 60% at 75% 20%, rgba(0,230,255,0.26) 0%, transparent 65%)",
     accent: "#00eaff",
@@ -96,9 +96,9 @@ const slides: SlideData[] = [
   },
   {
     id: 2,
-    tag: "Explore",
-    title: "Bold &\nBoundless",
-    sub: "Pushing creative limits with fearless design choices and refined execution.",
+    tag: "Testing",
+    title: "AI-Powered\nAssessments",
+    sub: "Generate intelligent CBT examinations, practice sessions, and evaluation systems tailored for modern education.",
     bg: "linear-gradient(135deg, #0a2e52 0%, #0f4275 45%, #0c5a7a 100%)",
     glow: "radial-gradient(ellipse 65% 50% at 78% 18%, rgba(0,180,220,0.30) 0%, transparent 68%)",
     accent: "#00c8e0",
@@ -109,16 +109,15 @@ const slides: SlideData[] = [
   },
   {
     id: 3,
-    tag: "Studio",
-    title: "Crafted\nWith Care",
-    sub: "Where attention to detail becomes the defining quality of exceptional work.",
+    tag: "Institutions",
+    title: "Built For\nModern Academics",
+    sub: "Connecting students, lecturers, and institutions through a unified educational infrastructure.",
     bg: "linear-gradient(135deg, #0a5570 0%, #0d6e8a 45%, #0a3f6b 100%)",
     glow: "radial-gradient(ellipse 58% 52% at 82% 14%, rgba(0,255,240,0.24) 0%, transparent 65%)",
     accent: "#33f5e8",
     accentSoft: "rgba(51,245,232,0.13)",
     accentBorder: "rgba(51,245,232,0.32)",
-    iconPath:
-      "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
+    iconPath: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5",
     imgSrc: "/images/1.png",
   },
 ];
@@ -455,14 +454,14 @@ function Slide({
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.36, ease: "easeOut" }}
+              className="font-patua"
               style={{
-                fontFamily: "'Syne', sans-serif",
                 fontSize: isMobile
                   ? "clamp(22px, 7.5vw, 30px)"
                   : isTablet
                     ? "clamp(28px, 4vw, 44px)"
                     : "clamp(26px, 3vw, 50px)",
-                fontWeight: 800,
+                fontWeight: 400,
                 color: "#ffffff",
                 lineHeight: 1.06,
                 marginBottom: isMobile ? "8px" : isTablet ? "10px" : "14px",
