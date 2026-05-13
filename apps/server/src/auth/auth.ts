@@ -49,7 +49,7 @@ export const auth = betterAuth({
   // trustedOrigins controls CORS for ALL routes — the nestjs-better-auth
   // wrapper registers @fastify/cors globally using this list.
   // Do NOT call app.enableCors() alongside this — it double-registers the plugin.
-  trustedOrigins: (process.env.ALLOWED_ORIGINS ?? 'http://scholaid.local:5000')
+  trustedOrigins: (process.env.ALLOWED_ORIGINS ?? 'http://scholaid.local:7000')
     .split(',')
     .map((o) => o.trim())
     .filter(Boolean),

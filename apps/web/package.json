@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev -H scholaid.local -p 5000",
+    "dev": "next dev -H scholaid.local -p 7000",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
