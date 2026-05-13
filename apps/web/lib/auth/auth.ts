@@ -30,6 +30,9 @@ type AuthClient = ReturnType<typeof createAuthClient>;
 export const authClient: AuthClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL ?? "http://localhost:5000",
   basePath: "/api/auth",
+  fetchOptions: {
+    credentials: "include", // 👈 sends cookies cross-origin
+  },
   plugins: [
     // Enables admin API methods on the client:
     // authClient.admin.setRole(), authClient.admin.banUser(), etc.

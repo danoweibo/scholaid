@@ -13,8 +13,9 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { GoogleIcon } from "./icons/socials";
-import { signIn, getSession } from "@/lib/auth/auth";
+import { signIn, getSession, authClient } from "@/lib/auth/auth";
 import type { ScholaidUser } from "@/lib/auth/types";
+import { useAuthStore } from "@/lib/auth/store";
 
 export function LoginForm({
   className,
@@ -31,23 +32,21 @@ export function LoginForm({
     setLoading(true);
     setError("");
 
-    const result = await signIn.email({ email, password });
+    const { data, error } = await authClient.signIn.email({ email, password });
 
-    if (result.error) {
-      setError(result.error.message ?? "Sign in failed. Please try again.");
+    if (error) {
+      setError(error.message ?? "Sign in failed. Please try again.");
       setLoading(false);
       return;
     }
 
-    // Fetch session to determine scholaidRole for routing
-    const session = await getSession();
-    const user = session?.data?.user as ScholaidUser | undefined;
-    const scholaidRole = user?.scholaidRole;
+    if (data) {
+      useAuthStore.getState().setAuth(data.user as ScholaidUser, data.token);
 
-    if (scholaidRole === "student") router.push("/student");
-    else if (scholaidRole === "lecturer") router.push("/lecturer");
-    else if (scholaidRole === "institution") router.push("/institution");
-    else router.push("/dashboard");
+      const scholaidRole = (data.user as ScholaidUser).scholaidRole;
+
+      router.push("/dashboard");
+    }
 
     setLoading(false);
   }

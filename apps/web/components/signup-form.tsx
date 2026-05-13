@@ -14,8 +14,9 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { GoogleIcon } from "./icons/socials";
-import { signUp } from "@/lib/auth/auth";
-import type { ScholaidRole } from "@/lib/auth/types";
+import type { ScholaidRole, ScholaidUser } from "@/lib/auth/types";
+import { authClient } from "@/lib/auth/auth";
+import { useAuthStore } from "@/lib/auth/store";
 
 // ---------------------------------------------------------------------------
 // Validation schema
@@ -166,14 +167,30 @@ export function SignupForm({
       // Sign up
       // ---------------------------------------------------------------------
 
-      const signUpResult = await signUp.email(payload);
+      const signUpResult = await authClient.signUp.email(payload);
 
       if (signUpResult.error) {
         setServerError(
           signUpResult.error.message ?? "Sign up failed. Please try again.",
         );
-
         return;
+      }
+
+      if (signUpResult.data) {
+        useAuthStore
+          .getState()
+          .setAuth(
+            signUpResult.data.user as ScholaidUser,
+            signUpResult.data.token ?? "",
+          );
+
+        const scholaidRole = (signUpResult.data.user as ScholaidUser)
+          .scholaidRole;
+
+        if (scholaidRole === "student") router.push("/student");
+        else if (scholaidRole === "lecturer") router.push("/lecturer");
+        else if (scholaidRole === "institution") router.push("/institution");
+        else router.push("/dashboard");
       }
 
       // ---------------------------------------------------------------------
