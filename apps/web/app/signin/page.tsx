@@ -1,8 +1,7 @@
-"use client"
+"use client";
 
-import { LoginForm } from "@/components/login-form"
-import { HugeiconsIcon } from "@hugeicons/react"
-import { LayoutBottomIcon } from "@hugeicons/core-free-icons"
+import { LoginForm } from "@/components/login-form";
+import Image from "next/image";
 
 export default function LoginPage() {
   return (
@@ -10,10 +9,14 @@ export default function LoginPage() {
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
           <a href="#" className="flex items-center gap-2 font-medium">
-            <div className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <HugeiconsIcon icon={LayoutBottomIcon} strokeWidth={2} className="size-4" />
-            </div>
-            Acme Inc.
+            <Image
+              src="/images/logotype-1.png"
+              alt="Scholaid"
+              width={120}
+              height={30}
+              className="h-auto w-30 object-contain"
+              priority
+            />
           </a>
         </div>
         <div className="flex flex-1 items-center justify-center">
@@ -22,7 +25,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-      <div className="relative hidden bg-muted lg:block">
+      <div className="bg-muted relative hidden lg:block">
         <img
           src="/placeholder.svg"
           alt="Image"
@@ -30,5 +33,5 @@ export default function LoginPage() {
         />
       </div>
     </div>
-  )
+  );
 }
