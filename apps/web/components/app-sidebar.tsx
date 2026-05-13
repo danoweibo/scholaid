@@ -18,8 +18,6 @@ import {
 } from "@/components/ui/sidebar";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  DashboardSquare01Icon,
-  Menu01Icon,
   ChartHistogramIcon,
   Folder01Icon,
   UserGroupIcon,
@@ -30,7 +28,7 @@ import {
   SearchIcon,
   Database01Icon,
   Analytics01Icon,
-  CommandIcon,
+  Analytics02Icon,
 } from "@hugeicons/core-free-icons";
 
 const data = {
@@ -41,14 +39,9 @@ const data = {
   },
   navMain: [
     {
-      title: "Dashboard",
+      title: "Overview",
       url: "#",
-      icon: <HugeiconsIcon icon={DashboardSquare01Icon} strokeWidth={2} />,
-    },
-    {
-      title: "Lifecycle",
-      url: "#",
-      icon: <HugeiconsIcon icon={Menu01Icon} strokeWidth={2} />,
+      icon: <HugeiconsIcon icon={Analytics02Icon} strokeWidth={2} />,
     },
     {
       title: "Analytics",
@@ -56,12 +49,12 @@ const data = {
       icon: <HugeiconsIcon icon={ChartHistogramIcon} strokeWidth={2} />,
     },
     {
-      title: "Projects",
+      title: "Assessments",
       url: "#",
       icon: <HugeiconsIcon icon={Folder01Icon} strokeWidth={2} />,
     },
     {
-      title: "Team",
+      title: "Classrooms",
       url: "#",
       icon: <HugeiconsIcon icon={UserGroupIcon} strokeWidth={2} />,
     },
@@ -121,7 +114,7 @@ const data = {
       icon: <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />,
     },
     {
-      title: "Get Help",
+      title: "Guides",
       url: "#",
       icon: <HugeiconsIcon icon={HelpCircleIcon} strokeWidth={2} />,
     },
@@ -133,7 +126,7 @@ const data = {
   ],
   documents: [
     {
-      name: "Data Library",
+      name: "Courseware",
       url: "#",
       icon: <HugeiconsIcon icon={Database01Icon} strokeWidth={2} />,
     },
@@ -143,7 +136,7 @@ const data = {
       icon: <HugeiconsIcon icon={Analytics01Icon} strokeWidth={2} />,
     },
     {
-      name: "Word Assistant",
+      name: "Submissions",
       url: "#",
       icon: <HugeiconsIcon icon={File01Icon} strokeWidth={2} />,
     },
