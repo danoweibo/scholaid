@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardAction,
@@ -8,18 +8,18 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { HugeiconsIcon } from "@hugeicons/react"
-import { ChartUpIcon, ChartDownIcon } from "@hugeicons/core-free-icons"
+} from "@/components/ui/card";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ChartUpIcon, ChartDownIcon } from "@hugeicons/core-free-icons";
 
 export function SectionCards() {
   return (
-    <div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 dark:*:data-[slot=card]:bg-card">
+    <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Total Revenue</CardDescription>
+          <CardDescription>Total Students</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
+            212
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
@@ -30,79 +30,102 @@ export function SectionCards() {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month{" "}
-            <HugeiconsIcon icon={ChartUpIcon} strokeWidth={2} className="size-4" />
+            Student enrollment is increasing{" "}
+            <HugeiconsIcon
+              icon={ChartUpIcon}
+              strokeWidth={2}
+              className="size-4"
+            />
           </div>
           <div className="text-muted-foreground">
-            Visitors for the last 6 months
+            Compared to the previous semester
           </div>
         </CardFooter>
       </Card>
+
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>New Customers</CardDescription>
+          <CardDescription>Average Performance</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            1,234
+            78%
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
               <HugeiconsIcon icon={ChartDownIcon} strokeWidth={2} />
-              -20%
+              -4%
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Down 20% this period{" "}
-            <HugeiconsIcon icon={ChartDownIcon} strokeWidth={2} className="size-4" />
+            Slight decline in student scores{" "}
+            <HugeiconsIcon
+              icon={ChartDownIcon}
+              strokeWidth={2}
+              className="size-4"
+            />
           </div>
           <div className="text-muted-foreground">
-            Acquisition needs attention
+            Performance intervention may be required
           </div>
         </CardFooter>
       </Card>
+
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Active Accounts</CardDescription>
+          <CardDescription>Active Courses</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            45,678
+            9
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
               <HugeiconsIcon icon={ChartUpIcon} strokeWidth={2} />
-              +12.5%
+              +8%
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Strong user retention{" "}
-            <HugeiconsIcon icon={ChartUpIcon} strokeWidth={2} className="size-4" />
+            Course engagement remains strong{" "}
+            <HugeiconsIcon
+              icon={ChartUpIcon}
+              strokeWidth={2}
+              className="size-4"
+            />
           </div>
-          <div className="text-muted-foreground">Engagement exceed targets</div>
+          <div className="text-muted-foreground">
+            Weekly attendance exceeded expectations
+          </div>
         </CardFooter>
       </Card>
+
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Growth Rate</CardDescription>
+          <CardDescription>Tests Conducted</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            4.5%
+            51
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
               <HugeiconsIcon icon={ChartUpIcon} strokeWidth={2} />
-              +4.5%
+              +18%
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Steady performance increase{" "}
-            <HugeiconsIcon icon={ChartUpIcon} strokeWidth={2} className="size-4" />
+            Assessment activity is growing{" "}
+            <HugeiconsIcon
+              icon={ChartUpIcon}
+              strokeWidth={2}
+              className="size-4"
+            />
           </div>
-          <div className="text-muted-foreground">Meets growth projections</div>
+          <div className="text-muted-foreground">
+            AI-generated CBT usage increased significantly
+          </div>
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }
