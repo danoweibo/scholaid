@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -46,7 +47,6 @@ interface IconPlaceholderProps {
 interface SubjectImageProps {
   src: string;
   accent: string;
-  iconPath: string;
   animKey: string;
 }
 
@@ -79,6 +79,7 @@ const slides: SlideData[] = [
     accentSoft: "rgba(0,212,232,0.18)",
     accentBorder: "rgba(0,212,232,0.38)",
     iconPath: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5",
+    imgSrc: "/images/9.png",
   },
   {
     id: 1,
@@ -91,6 +92,7 @@ const slides: SlideData[] = [
     accentSoft: "rgba(0,234,255,0.15)",
     accentBorder: "rgba(0,234,255,0.32)",
     iconPath: "M5 3l14 9-14 9V3z",
+    imgSrc: "/images/5.png",
   },
   {
     id: 2,
@@ -103,6 +105,7 @@ const slides: SlideData[] = [
     accentSoft: "rgba(0,200,224,0.15)",
     accentBorder: "rgba(0,200,224,0.34)",
     iconPath: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",
+    imgSrc: "/images/7.png",
   },
   {
     id: 3,
@@ -116,6 +119,7 @@ const slides: SlideData[] = [
     accentBorder: "rgba(51,245,232,0.32)",
     iconPath:
       "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
+    imgSrc: "/images/1.png",
   },
 ];
 
@@ -173,7 +177,6 @@ function IconPlaceholder({
         overflow: "hidden",
       }}
     >
-      {/* Decorative rings */}
       <div
         style={{
           position: "absolute",
@@ -198,7 +201,6 @@ function IconPlaceholder({
           transform: "translate(-50%,-50%)",
         }}
       />
-      {/* Icon circle */}
       <div
         style={{
           width: "64px",
@@ -248,21 +250,27 @@ function IconPlaceholder({
 
 function SubjectImage({ src, accent, animKey }: SubjectImageProps) {
   return (
-    <motion.img
+    <motion.div
       key={animKey}
-      src={src}
-      alt="subject"
       initial={IMG_INITIAL}
       animate={IMG_ANIMATE}
       transition={IMG_SPRING}
       style={{
         width: "100%",
         height: "100%",
-        objectFit: "contain",
-        objectPosition: "bottom center",
+        position: "relative",
         filter: `drop-shadow(0 24px 48px ${accent}55)`,
       }}
-    />
+    >
+      <Image
+        src={src}
+        alt="subject"
+        className="scale-180"
+        fill
+        style={{ objectFit: "contain", objectPosition: "center" }}
+        priority
+      />
+    </motion.div>
   );
 }
 
@@ -282,7 +290,9 @@ function Slide({
 
   const sizeStyle: React.CSSProperties = isVertical
     ? {
-        flex: isActive ? ACTIVE_FLEX : THUMB_FLEX,
+        flexGrow: isActive ? ACTIVE_FLEX : THUMB_FLEX,
+        flexShrink: 0,
+        flexBasis: "auto",
         minHeight: isActive
           ? isMobile
             ? "220px"
@@ -292,7 +302,12 @@ function Slide({
             : "58px",
         width: "100%",
       }
-    : { flex: isActive ? ACTIVE_FLEX : THUMB_FLEX, height: "100%" };
+    : {
+        flexGrow: isActive ? ACTIVE_FLEX : THUMB_FLEX,
+        flexShrink: 0,
+        flexBasis: "auto",
+        height: "100%",
+      };
 
   const pad = isMobile
     ? "1.25rem 1.1rem 1.1rem"
@@ -314,7 +329,6 @@ function Slide({
         overflow: "hidden",
         cursor: isActive ? "default" : "pointer",
         background: slide.bg,
-        flexShrink: 0,
       }}
       transition={{ duration: DURATION, ease: EASE }}
     >
@@ -375,7 +389,9 @@ function Slide({
           {/* Text block */}
           <div
             style={{
-              flex: stackAxis ? "0 0 auto" : "0 0 52%",
+              flexGrow: 0,
+              flexShrink: 0,
+              flexBasis: stackAxis ? "auto" : "52%",
               padding: pad,
               display: "flex",
               flexDirection: "column",
@@ -503,7 +519,9 @@ function Slide({
           {/* Image block */}
           <div
             style={{
-              flex: 1,
+              flexGrow: 1,
+              flexShrink: 1,
+              flexBasis: "0%",
               alignSelf: "stretch",
               position: "relative",
               padding: isMobile
@@ -523,7 +541,6 @@ function Slide({
               <SubjectImage
                 src={slide.imgSrc}
                 accent={slide.accent}
-                iconPath={slide.iconPath}
                 animKey={`img-${slide.id}`}
               />
             ) : (
