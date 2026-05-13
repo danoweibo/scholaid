@@ -62,22 +62,6 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 7,
   },
 
-  socialProviders: {
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    },
-    linkedin: {
-      clientId: process.env.LINKEDIN_CLIENT_ID as string,
-      clientSecret: process.env.LINKEDIN_CLIENT_SECRET as string,
-    },
-    microsoft: {
-      clientId: process.env.MICROSOFT_CLIENT_ID as string,
-      clientSecret: process.env.MICROSOFT_CLIENT_SECRET as string,
-      tenantId: 'common',
-    },
-  },
-
   plugins: [
     openAPI(),
     // The admin plugin manages the `role` field on the user table.
