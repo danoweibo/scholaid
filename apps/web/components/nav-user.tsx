@@ -24,17 +24,32 @@ import {
   Logout01Icon,
   School01Icon,
 } from "@hugeicons/core-free-icons";
+import { useRouter } from "next/navigation";
+import { useScholaidSession, signOut } from "@/lib/auth/session";
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+function getInitials(name: string): string {
+  return name
+    .trim()
+    .split(/\s+/)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("")
+    .slice(0, 2);
+}
+
+export function NavUser() {
   const { isMobile } = useSidebar();
+  const { user } = useScholaidSession();
+  const router = useRouter();
+
+  const initials = user?.name ? getInitials(user.name) : "??";
+
+  const handleLogout = async () => {
+    await signOut({
+      router,
+      redirectTo: "/",
+    });
+  };
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -45,13 +60,13 @@ export function NavUser({
             }
           >
             <Avatar className="size-8 rounded-lg grayscale">
-              <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+              <AvatarImage src={user?.image ?? ""} alt={user?.name ?? ""} />
+              <AvatarFallback className="rounded-lg">{initials}</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-medium">{user.name}</span>
+              <span className="truncate font-medium">{user?.name}</span>
               <span className="text-foreground/70 truncate text-xs">
-                {user.email}
+                {user?.email}
               </span>
             </div>
             <HugeiconsIcon
@@ -60,6 +75,7 @@ export function NavUser({
               className="ml-auto size-4"
             />
           </DropdownMenuTrigger>
+
           <DropdownMenuContent
             className="min-w-56"
             side={isMobile ? "bottom" : "right"}
@@ -70,18 +86,22 @@ export function NavUser({
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                   <Avatar className="size-8">
-                    <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                    <AvatarFallback className="rounded-lg">
+                      {initials}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{user.name}</span>
+                    <span className="truncate font-medium">{user?.name}</span>
                     <span className="text-muted-foreground truncate text-xs">
-                      {user.email}
+                      {user?.email}
                     </span>
                   </div>
                 </div>
               </DropdownMenuLabel>
             </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
+
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <HugeiconsIcon icon={School01Icon} strokeWidth={2} />
@@ -96,8 +116,10 @@ export function NavUser({
                 Account
               </DropdownMenuItem>
             </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+
+            <DropdownMenuItem onClick={handleLogout}>
               <HugeiconsIcon icon={Logout01Icon} strokeWidth={2} />
               Log out
             </DropdownMenuItem>
