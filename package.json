@@ -7,7 +7,7 @@
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "dev:app": "turbo run dev --filter=server --filter=web --filter=@scholaid/ui",
+    "dev:app": "turbo run dev --filter=server --filter=web",
     "dev:web": "turbo run dev --filter=web --filter=@scholaid/ui",
     "dev:api": "turbo run dev --filter=server"
   },
