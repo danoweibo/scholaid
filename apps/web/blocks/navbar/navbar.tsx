@@ -105,7 +105,7 @@ export function Navbar() {
               </Link>
               <Link
                 href="#"
-                className="cursor-pointer rounded-lg border-b-[4px] border-gray-400 bg-gray-50 px-6 py-2 text-sm font-semibold text-[#19324D] transition-all hover:-translate-y-[1px] hover:border-b-[6px] hover:brightness-110 active:translate-y-[2px] active:border-b-[2px] active:brightness-90"
+                className="cursor-pointer rounded-lg border-b-4 border-gray-400 bg-gray-50 px-6 py-2 text-sm font-semibold text-[#19324D] transition-all hover:-translate-y-px hover:border-b-[6px] hover:brightness-110 active:translate-y-0.5 active:border-b-2 active:brightness-90"
               >
                 Book a demo
               </Link>
@@ -154,7 +154,7 @@ export function Navbar() {
             className="fixed inset-0 z-40 flex flex-col bg-[#19324D] xl:hidden"
           >
             {/* Top spacer — clears the navbar bar */}
-            <div className="h-[4.5rem] shrink-0" />
+            <div className="h-18 shrink-0" />
 
             {/* Nav Links — grow to fill space */}
             <div className="flex flex-1 flex-col justify-center px-6">
@@ -203,7 +203,7 @@ export function Navbar() {
               <Link
                 href="#"
                 onClick={() => setMenuOpen(false)}
-                className="cursor-pointer rounded-lg border-b-[4px] border-gray-400 bg-gray-50 px-6 py-3 text-center text-sm font-semibold text-[#19324D] transition-all hover:-translate-y-[1px] hover:border-b-[6px] hover:brightness-110 active:translate-y-[2px] active:border-b-[2px] active:brightness-90"
+                className="cursor-pointer rounded-lg border-b-4 border-gray-400 bg-gray-50 px-6 py-3 text-center text-sm font-semibold text-[#19324D] transition-all hover:-translate-y-px hover:border-b-[6px] hover:brightness-110 active:translate-y-0.5 active:border-b-2 active:brightness-90"
               >
                 Book a demo
               </Link>
