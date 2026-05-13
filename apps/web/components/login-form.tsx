@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { GoogleIcon } from "./icons/socials";
 import { signIn, getSession } from "@/lib/auth/auth";
+import type { ScholaidUser } from "@/lib/auth/types";
 
 export function LoginForm({
   className,
@@ -40,7 +41,8 @@ export function LoginForm({
 
     // Fetch session to determine scholaidRole for routing
     const session = await getSession();
-    const scholaidRole = session?.data?.user?.scholaidRole;
+    const user = session?.data?.user as ScholaidUser | undefined;
+    const scholaidRole = user?.scholaidRole;
 
     if (scholaidRole === "student") router.push("/student");
     else if (scholaidRole === "lecturer") router.push("/lecturer");
