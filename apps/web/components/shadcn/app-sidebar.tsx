@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { NavDocuments } from "@/components/nav-documents";
+import { NavDocuments } from "@/components/shadcn/nav-documents";
 import { NavMain } from "@/components/nav-main";
 import Image from "next/image";
 import { NavSecondary } from "@/components/nav-secondary";
