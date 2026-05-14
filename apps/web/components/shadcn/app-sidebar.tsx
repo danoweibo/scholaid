@@ -3,10 +3,10 @@
 import * as React from "react";
 
 import { NavDocuments } from "@/components/shadcn/nav-documents";
-import { NavMain } from "@/components/nav-main";
+import { NavMain } from "@/components/shadcn/nav-main";
 import Image from "next/image";
-import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
+import { NavSecondary } from "@/components/shadcn/nav-secondary";
+import { NavUser } from "@/components/shadcn/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -170,7 +170,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );
