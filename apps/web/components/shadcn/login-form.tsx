@@ -12,7 +12,7 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { GoogleIcon } from "./icons/socials";
+import { GoogleIcon } from "../icons/socials";
 import { signIn, getSession, authClient } from "@/lib/auth/auth";
 import type { ScholaidUser } from "@/lib/auth/types";
 import { useAuthStore } from "@/lib/auth/store";
