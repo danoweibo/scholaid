@@ -1,6 +1,6 @@
 "use client";
 
-import { LoginForm } from "@/components/login-form";
+import { LoginForm } from "@/components/shadcn/login-form";
 import Image from "next/image";
 import { useState } from "react";
 
