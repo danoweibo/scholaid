@@ -36,6 +36,14 @@ export const auth = betterAuth({
     },
   },
 
+  advanced: {
+    useSecureCookies: true,
+    crossSubDomainCookies: {
+      enabled: true,
+      domain: '.scholaid.co',
+    },
+  },
+
   databaseHooks: {
     user: {
       create: {
