@@ -22,6 +22,9 @@ export function useScholaidSession() {
 export async function signOut(options?: SignOutOptions): Promise<void> {
   const { router, redirectTo, onSuccess } = options ?? {};
 
+  // clearAuth now handles both the Zustand store and the bare localStorage
+  // "scholaid_token" key, so authClient stops sending a Bearer token
+  // immediately even before the server round-trip completes.
   useAuthStore.getState().clearAuth();
 
   await authClient.signOut({

@@ -13,9 +13,16 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { GoogleIcon } from "../icons/socials";
-import { signIn, getSession, authClient } from "@/lib/auth/auth";
+import { authClient } from "@/lib/auth/auth";
 import type { ScholaidUser } from "@/lib/auth/types";
 import { useAuthStore } from "@/lib/auth/store";
+
+function getRoleRedirect(role: ScholaidUser["scholaidRole"]) {
+  if (role === "student") return "/student";
+  if (role === "lecturer") return "/lecturer";
+  if (role === "institution") return "/institution";
+  return "/dashboard";
+}
 
 export function LoginForm({
   className,
@@ -32,23 +39,26 @@ export function LoginForm({
     setLoading(true);
     setError("");
 
-    const { data, error } = await authClient.signIn.email({ email, password });
+    try {
+      const { data, error } = await authClient.signIn.email({ email, password });
 
-    if (error) {
-      setError(error.message ?? "Sign in failed. Please try again.");
+      if (error) {
+        setError(error.message ?? "Sign in failed. Please try again.");
+        return;
+      }
+
+      if (data) {
+        const user = data.user as ScholaidUser;
+        // setAuth writes the token to both the store and localStorage so the
+        // authClient Bearer getter is immediately up to date.
+        useAuthStore.getState().setAuth(user, data.token);
+        router.push(getRoleRedirect(user.scholaidRole));
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
       setLoading(false);
-      return;
     }
-
-    if (data) {
-      useAuthStore.getState().setAuth(data.user as ScholaidUser, data.token);
-
-      const scholaidRole = (data.user as ScholaidUser).scholaidRole;
-
-      router.push("/dashboard");
-    }
-
-    setLoading(false);
   }
 
   return (
@@ -65,7 +75,6 @@ export function LoginForm({
           </p>
         </div>
 
-        {/* Error message */}
         {error && (
           <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-center text-sm text-red-500">
             {error}

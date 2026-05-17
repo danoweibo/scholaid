@@ -75,6 +75,13 @@ const ROLE_OPTIONS: {
   },
 ];
 
+function getRoleRedirect(role: ScholaidRole) {
+  if (role === "student") return "/student";
+  if (role === "lecturer") return "/lecturer";
+  if (role === "institution") return "/institution";
+  return "/dashboard";
+}
+
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
@@ -106,42 +113,26 @@ export function SignupForm({
   ) {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (errors[name as keyof SignUpFormData]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: undefined,
-      }));
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
     setServerError("");
     setErrors({});
-
-    // -----------------------------------------------------------------------
-    // Client-side validation
-    // -----------------------------------------------------------------------
 
     const result = signUpSchema.safeParse(formData);
 
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof SignUpFormData, string>> = {};
-
       result.error.issues.forEach((err: z.ZodIssue) => {
         const field = err.path[0] as keyof SignUpFormData;
-
-        if (!fieldErrors[field]) {
-          fieldErrors[field] = err.message;
-        }
+        if (!fieldErrors[field]) fieldErrors[field] = err.message;
       });
-
       setErrors(fieldErrors);
       return;
     }
@@ -149,10 +140,6 @@ export function SignupForm({
     setLoading(true);
 
     try {
-      // ---------------------------------------------------------------------
-      // Payload
-      // ---------------------------------------------------------------------
-
       const payload = {
         name: formData.name,
         email: formData.email,
@@ -162,10 +149,6 @@ export function SignupForm({
           institutionName: formData.institutionName,
         }),
       };
-
-      // ---------------------------------------------------------------------
-      // Sign up
-      // ---------------------------------------------------------------------
 
       const signUpResult = await authClient.signUp.email(payload);
 
@@ -177,27 +160,15 @@ export function SignupForm({
       }
 
       if (signUpResult.data) {
+        const user = signUpResult.data.user as ScholaidUser;
+        // setAuth writes the token to both the store and localStorage.
         useAuthStore
           .getState()
-          .setAuth(
-            signUpResult.data.user as ScholaidUser,
-            signUpResult.data.token ?? "",
-          );
+          .setAuth(user, signUpResult.data.token ?? "");
 
-        const scholaidRole = (signUpResult.data.user as ScholaidUser)
-          .scholaidRole;
-
-        if (scholaidRole === "student") router.push("/student");
-        else if (scholaidRole === "lecturer") router.push("/lecturer");
-        else if (scholaidRole === "institution") router.push("/institution");
-        else router.push("/dashboard");
+        // Single redirect — no fallthrough to a second router.push below.
+        router.push(getRoleRedirect(user.scholaidRole));
       }
-
-      // ---------------------------------------------------------------------
-      // Success redirect
-      // ---------------------------------------------------------------------
-
-      router.push("/dashboard");
     } catch {
       setServerError("Something went wrong. Please try again.");
     } finally {
@@ -216,13 +187,10 @@ export function SignupForm({
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
           <h1 className="text-2xl font-bold">Create your account</h1>
-
           <p className="text-muted-foreground text-sm text-balance">
             Fill in the form below to create your account
           </p>
         </div>
-
-        {/* Server error */}
 
         {serverError && (
           <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-center text-sm text-red-500">
@@ -230,11 +198,8 @@ export function SignupForm({
           </p>
         )}
 
-        {/* Full Name */}
-
         <Field>
           <FieldLabel htmlFor="name">Full Name</FieldLabel>
-
           <Input
             id="name"
             name="name"
@@ -246,17 +211,13 @@ export function SignupForm({
             onChange={handleChange}
             disabled={loading}
           />
-
           {errors.name && (
             <p className="mt-1 text-xs text-red-500">{errors.name}</p>
           )}
         </Field>
 
-        {/* Email */}
-
         <Field>
           <FieldLabel htmlFor="email">Email</FieldLabel>
-
           <Input
             id="email"
             name="email"
@@ -268,7 +229,6 @@ export function SignupForm({
             onChange={handleChange}
             disabled={loading}
           />
-
           {errors.email ? (
             <p className="mt-1 text-xs text-red-500">{errors.email}</p>
           ) : (
@@ -279,11 +239,8 @@ export function SignupForm({
           )}
         </Field>
 
-        {/* Role */}
-
         <Field>
           <FieldLabel htmlFor="scholaidRole">Role</FieldLabel>
-
           <select
             id="scholaidRole"
             name="scholaidRole"
@@ -303,18 +260,14 @@ export function SignupForm({
               </option>
             ))}
           </select>
-
           {errors.scholaidRole && (
             <p className="mt-1 text-xs text-red-500">{errors.scholaidRole}</p>
           )}
         </Field>
 
-        {/* Institution Name */}
-
         {isInstitution && (
           <Field>
             <FieldLabel htmlFor="institutionName">Institution Name</FieldLabel>
-
             <Input
               id="institutionName"
               name="institutionName"
@@ -326,7 +279,6 @@ export function SignupForm({
               onChange={handleChange}
               disabled={loading}
             />
-
             {errors.institutionName && (
               <p className="mt-1 text-xs text-red-500">
                 {errors.institutionName}
@@ -335,11 +287,8 @@ export function SignupForm({
           </Field>
         )}
 
-        {/* Password */}
-
         <Field>
           <FieldLabel htmlFor="password">Password</FieldLabel>
-
           <Input
             id="password"
             name="password"
@@ -350,21 +299,15 @@ export function SignupForm({
             onChange={handleChange}
             disabled={loading}
           />
-
           {errors.password ? (
             <p className="mt-1 text-xs text-red-500">{errors.password}</p>
           ) : (
-            <FieldDescription>
-              Must be at least 8 characters long.
-            </FieldDescription>
+            <FieldDescription>Must be at least 8 characters long.</FieldDescription>
           )}
         </Field>
 
-        {/* Confirm Password */}
-
         <Field>
           <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
-
           <Input
             id="confirm-password"
             name="confirmPassword"
@@ -375,17 +318,12 @@ export function SignupForm({
             onChange={handleChange}
             disabled={loading}
           />
-
           {errors.confirmPassword ? (
-            <p className="mt-1 text-xs text-red-500">
-              {errors.confirmPassword}
-            </p>
+            <p className="mt-1 text-xs text-red-500">{errors.confirmPassword}</p>
           ) : (
             <FieldDescription>Please confirm your password.</FieldDescription>
           )}
         </Field>
-
-        {/* Submit */}
 
         <Field>
           <Button type="submit" disabled={loading}>
@@ -395,14 +333,11 @@ export function SignupForm({
 
         <FieldSeparator>Or continue with</FieldSeparator>
 
-        {/* Google */}
-
         <Field>
           <Button variant="outline" type="button" disabled={loading}>
             <GoogleIcon className="mr-1 h-6 w-6" />
             Login with Google
           </Button>
-
           <FieldDescription className="px-6 text-center">
             Already have an account?{" "}
             <a href="/signin" className="underline underline-offset-4">
