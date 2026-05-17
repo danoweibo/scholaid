@@ -36,12 +36,15 @@ export const auth = betterAuth({
     },
   },
 
-  advanced: {
-    useSecureCookies: true,
-    crossSubDomainCookies: {
-      enabled: true,
-      domain: '.scholaid.co',
+  session: {
+    expiresIn: 60 * 60 * 24 * 7,
+    cookieCache: {
+      enabled: false,
     },
+  },
+  advanced: {
+    useSecureCookies: false,
+    disableCsrfCheck: true,
   },
 
   databaseHooks: {
@@ -64,10 +67,6 @@ export const auth = betterAuth({
 
   emailAndPassword: {
     enabled: true,
-  },
-
-  session: {
-    expiresIn: 60 * 60 * 24 * 7,
   },
 
   plugins: [
