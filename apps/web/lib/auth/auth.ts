@@ -7,7 +7,10 @@ export const authClient: AuthClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL ?? "http://localhost:5000",
   basePath: "/api/auth",
   fetchOptions: {
-    credentials: "include",
+    auth: {
+      type: "Bearer",
+      token: () => localStorage.getItem("scholaid_token") ?? "",
+    },
   },
   plugins: [adminClient()],
 });
