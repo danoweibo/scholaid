@@ -1,5 +1,5 @@
 import type { User } from 'better-auth';
-import { db } from '@/db';
+import { db } from '@/db/index';
 import { students, lecturers, institutions } from '@/db/schema';
 import { generatePublicId } from '@/lib/utils/id';
 
@@ -39,7 +39,7 @@ export async function createUserProfileHook(user: ScholaidUser): Promise<void> {
 
     default:
       console.warn(
-        `[createUserProfileHook] Unknown scholaidRole "${String(scholaidRole)}" for user ${id}. No domain profile created.`,
+        `[createUserProfileHook] Unknown scholaidRole "${String(scholaidRole)}" for user ${id}.`,
       );
   }
 }

@@ -21,16 +21,16 @@
     "lint": "eslint src --max-warnings 0"
   },
   "peerDependencies": {
-    "react": "^19.2.4"
+    "react": "^19.2.6"
   },
   "devDependencies": {
     "@scholaid/eslint-config": "workspace:*",
     "@scholaid/tailwind-config": "workspace:*",
     "@scholaid/typescript-config": "workspace:*",
-    "@tailwindcss/cli": "^4.2.4",
-    "@types/react": "^19.2.3",
+    "@tailwindcss/cli": "^4.3.0",
+    "@types/react": "^19.2.14",
     "eslint": "^9.39.1",
-    "tailwindcss": "^4.2.4",
+    "tailwindcss": "^4.3.0",
     "typescript": "5.9.3"
   }
 }
