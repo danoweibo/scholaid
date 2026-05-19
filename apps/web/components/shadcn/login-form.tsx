@@ -40,7 +40,10 @@ export function LoginForm({
     setError("");
 
     try {
-      const { data, error } = await authClient.signIn.email({ email, password });
+      const { data, error } = await authClient.signIn.email({
+        email,
+        password,
+      });
 
       if (error) {
         setError(error.message ?? "Sign in failed. Please try again.");
@@ -49,10 +52,8 @@ export function LoginForm({
 
       if (data) {
         const user = data.user as ScholaidUser;
-        // setAuth writes the token to both the store and localStorage so the
-        // authClient Bearer getter is immediately up to date.
-        useAuthStore.getState().setAuth(user, data.token);
-        router.push(getRoleRedirect(user.scholaidRole));
+        useAuthStore.getState().setUser(data.user as ScholaidUser);
+        router.push("/dashboard");
       }
     } catch {
       setError("Something went wrong. Please try again.");
