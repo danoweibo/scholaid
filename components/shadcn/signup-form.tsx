@@ -122,6 +122,7 @@ export function SignupForm({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
     setServerError("");
     setErrors({});
 
@@ -129,10 +130,15 @@ export function SignupForm({
 
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof SignUpFormData, string>> = {};
+
       result.error.issues.forEach((err: z.ZodIssue) => {
         const field = err.path[0] as keyof SignUpFormData;
-        if (!fieldErrors[field]) fieldErrors[field] = err.message;
+
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = err.message;
+        }
       });
+
       setErrors(fieldErrors);
       return;
     }
@@ -145,6 +151,7 @@ export function SignupForm({
         email: formData.email,
         password: formData.password,
         scholaidRole: formData.scholaidRole,
+
         ...(formData.scholaidRole === "institution" && {
           institutionName: formData.institutionName,
         }),
@@ -152,23 +159,42 @@ export function SignupForm({
 
       const signUpResult = await authClient.signUp.email(payload);
 
+      console.log("SIGNUP RESULT:", signUpResult);
+
       if (signUpResult.error) {
         setServerError(
           signUpResult.error.message ?? "Sign up failed. Please try again.",
         );
+
         return;
       }
 
-      if (signUpResult.data) {
-        const user = signUpResult.data.user as ScholaidUser;
-        // setAuth writes the token to both the store and localStorage.
-        useAuthStore.getState().setAuth(user, signUpResult.data.token ?? "");
+      // Wait briefly for cookie/session hydration
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
-        // Single redirect — no fallthrough to a second router.push below.
-        router.push(getRoleRedirect(user.scholaidRole));
+      const sessionResult = await authClient.getSession();
+
+      console.log("SESSION RESULT:", sessionResult);
+
+      if (!sessionResult.data?.user) {
+        setServerError("Account created but session could not be established.");
+
+        return;
       }
-    } catch {
-      setServerError("Something went wrong. Please try again.");
+
+      const user = sessionResult.data.user as ScholaidUser;
+
+      router.replace(getRoleRedirect(user.scholaidRole));
+
+      router.refresh();
+    } catch (error) {
+      console.error("SIGNUP ERROR:", error);
+
+      setServerError(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
