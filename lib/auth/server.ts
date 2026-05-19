@@ -7,10 +7,7 @@ import * as schema from "@/database/schema";
 
 export const auth = betterAuth({
   basePath: "/api/auth",
-  baseURL:
-    process.env.BETTER_AUTH_URL ||
-    "https://www.scholaid.co" ||
-    "http://scholaid.local:7000",
+  baseURL: process.env.BETTER_AUTH_URL || "http://scholaid.local:7000",
 
   secret: process.env.BETTER_AUTH_SECRET,
 
