@@ -4,7 +4,7 @@ import { adminClient } from "better-auth/client/plugins";
 type AuthClient = ReturnType<typeof createAuthClient>;
 
 export const authClient: AuthClient = createAuthClient({
-  baseURL: process.env.BETTER_AUTH_URL ?? "http://scholaid.local:7000",
+  baseURL: process.env.BETTER_AUTH_URL ?? "https://scholaid.co",
   basePath: "/api/auth",
   fetchOptions: {
     credentials: "include",
