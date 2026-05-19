@@ -11,7 +11,7 @@ import { userRoutes } from "@/routes/users.js";
 const app = Fastify({ logger: true });
 
 await app.register(cors, {
-  origin: (process.env.ALLOWED_ORIGINS ?? "http://localhost:3000")
+  origin: (process.env.ALLOWED_ORIGINS ?? "http://scholaid.co")
     .split(",")
     .map((o) => o.trim())
     .filter(Boolean),
