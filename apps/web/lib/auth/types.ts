@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import type { useRouter } from "next/navigation";
 
 /**
  * Scholaid entity types — mirrors the server's ScholaidRole type.
@@ -25,7 +25,6 @@ export interface ScholaidUser {
   image?: string | null;
   scholaidRole: ScholaidRole;
   institutionName?: string | null;
-  // admin plugin fields
   role: string; // 'user' | 'admin'
   banned?: boolean;
   createdAt: Date;
@@ -58,7 +57,7 @@ export interface SignUpPayload {
   institutionName?: string;
 }
 
-/* `better-auth` signout interface. */
+/** better-auth signout options. */
 export type SignOutOptions = {
   router?: ReturnType<typeof useRouter>;
   redirectTo?: string;

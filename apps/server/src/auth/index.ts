@@ -33,7 +33,6 @@ export const auth = betterAuth({
 
   session: {
     expiresIn: 60 * 60 * 24 * 7,
-    cookieCache: { enabled: false },
   },
 
   advanced: {
@@ -55,7 +54,7 @@ export const auth = betterAuth({
     },
   },
 
-  trustedOrigins: (process.env.ALLOWED_ORIGINS ?? "http://localhost:3000")
+  trustedOrigins: (process.env.ALLOWED_ORIGINS ?? "http://scholaid.local:5000")
     .split(",")
     .map((o) => o.trim())
     .filter(Boolean),

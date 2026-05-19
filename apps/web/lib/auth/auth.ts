@@ -7,13 +7,9 @@ export const authClient: AuthClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL ?? "http://localhost:5000",
   basePath: "/api/auth",
   fetchOptions: {
-    auth: {
-      type: "Bearer",
-      token: () => localStorage.getItem("scholaid_token") ?? "",
-    },
+    credentials: "include", // sends cookie cross-origin to backboard.scholaid.co
   },
   plugins: [adminClient()],
 });
 
-// Re-export the typed session hook and common methods for convenience
 export const { signIn, signUp, signOut, useSession, getSession } = authClient;
