@@ -1,0 +1,61 @@
+import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
+import { Geist, Noto_Sans, Instrument_Sans } from "next/font/google";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import {
+  apfelGrotezk,
+  apfelGrotezkFett,
+  apfelGrotezkMittel,
+  momoTrustDisplay,
+  patuaOne,
+  protestStrike,
+  sketchup,
+} from "@/lib/fonts";
+import { siteMetadata } from "@/lib/metadata";
+import { cn } from "@/lib/utils";
+import { LenisProvider } from "@/providers/lenis";
+import { ThemeProvider } from "@/providers/theme";
+import type { Metadata } from "next";
+
+const instrumentSansHeading = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-heading",
+});
+
+const notoSans = Noto_Sans({ subsets: ["latin"], variable: "--font-sans" });
+export const metadata: Metadata = siteMetadata;
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(
+        "font-sans",
+        notoSans.variable,
+        instrumentSansHeading.variable,
+      )}
+    >
+      <body
+        className={` ${apfelGrotezk.variable} ${apfelGrotezkFett.variable} ${apfelGrotezkMittel.variable} ${momoTrustDisplay.variable} ${patuaOne.variable} ${protestStrike.variable} ${sketchup.variable} antialiased`}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TooltipProvider>
+            <LenisProvider>{children}</LenisProvider>
+          </TooltipProvider>
+          {/* <GooeyToaster /> */}
+        </ThemeProvider>
+        {process.env.NODE_ENV === "production" && <Analytics />}
+      </body>
+    </html>
+  );
+}
