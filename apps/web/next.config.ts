@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: `${process.env.SERVER_URL}/api/:path*`,
+        destination: "https://backboard.scholaid.co/api/:path*",
       },
     ];
   },
