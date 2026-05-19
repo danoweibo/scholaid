@@ -7,7 +7,18 @@ import { createUserProfileHook } from "./hooks/create-user-profile.hook.js";
 
 export const auth = betterAuth({
   basePath: "/api/auth",
-  baseURL: process.env.BETTER_AUTH_URL,
+  baseURL: {
+    allowedHosts: [
+      "backboard.scholaid.co",
+      "scholaid.co",
+      "www.scholaid.co",
+      "localhost:5000",
+      "scholaid.local:7000",
+    ],
+    protocol: process.env.NODE_ENV === "production" ? "https" : "http",
+    fallback: "https://backboard.scholaid.co",
+  },
+
   secret: process.env.BETTER_AUTH_SECRET,
 
   database: drizzleAdapter(db, {
@@ -40,7 +51,7 @@ export const auth = betterAuth({
     disableCsrfCheck: true,
     crossSubDomainCookies: {
       enabled: true,
-      domain: process.env.COOKIE_DOMAIN ?? "localhost",
+      domain: ".scholaid.co", // explicit shared parent domain
     },
   },
 
@@ -53,11 +64,6 @@ export const auth = betterAuth({
       },
     },
   },
-
-  trustedOrigins: (process.env.ALLOWED_ORIGINS ?? "http://scholaid.local:5000")
-    .split(",")
-    .map((o) => o.trim())
-    .filter(Boolean),
 
   emailAndPassword: { enabled: true },
 
