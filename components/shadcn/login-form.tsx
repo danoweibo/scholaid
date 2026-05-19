@@ -18,9 +18,9 @@ import { cn } from "@/lib/utils";
 import { GoogleIcon } from "../icons/socials";
 
 function getRoleRedirect(role: ScholaidUser["scholaidRole"]) {
-  if (role === "student") return "/student";
-  if (role === "lecturer") return "/lecturer";
-  if (role === "institution") return "/institution";
+  if (role === "student") return "/student/dashboard";
+  if (role === "lecturer") return "/lecturer/dashboard";
+  if (role === "institution") return "/institution/dashboard";
   return "/dashboard";
 }
 
@@ -53,7 +53,7 @@ export function LoginForm({
       if (data) {
         const user = data.user as ScholaidUser;
         useAuthStore.getState().setUser(data.user as ScholaidUser);
-        router.push("/dashboard");
+        router.push(getRoleRedirect(user.scholaidRole));
       }
     } catch {
       setError("Something went wrong. Please try again.");

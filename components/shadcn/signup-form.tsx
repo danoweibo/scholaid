@@ -76,9 +76,9 @@ const ROLE_OPTIONS: {
 ];
 
 function getRoleRedirect(role: ScholaidRole) {
-  if (role === "student") return "/student";
-  if (role === "lecturer") return "/lecturer";
-  if (role === "institution") return "/institution";
+  if (role === "student") return "/student/dashboard";
+  if (role === "lecturer") return "/lecturer/dashboard";
+  if (role === "institution") return "/institution/dashboard";
   return "/dashboard";
 }
 
