@@ -95,12 +95,8 @@
           "name": "account_user_id_user_id_fk",
           "tableFrom": "account",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -177,12 +173,8 @@
           "name": "institutions_admin_user_id_user_id_fk",
           "tableFrom": "institutions",
           "tableTo": "user",
-          "columnsFrom": [
-            "admin_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["admin_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "no action"
         }
@@ -192,16 +184,12 @@
         "institutions_institution_id_unique": {
           "name": "institutions_institution_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "institution_id"
-          ]
+          "columns": ["institution_id"]
         },
         "institutions_admin_user_id_unique": {
           "name": "institutions_admin_user_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "admin_user_id"
-          ]
+          "columns": ["admin_user_id"]
         }
       },
       "policies": {},
@@ -277,12 +265,8 @@
           "name": "invites_lecturer_id_lecturers_id_fk",
           "tableFrom": "invites",
           "tableTo": "lecturers",
-          "columnsFrom": [
-            "lecturer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["lecturer_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -292,9 +276,7 @@
         "invites_token_unique": {
           "name": "invites_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token"
-          ]
+          "columns": ["token"]
         }
       },
       "policies": {},
@@ -378,12 +360,8 @@
           "name": "lecturers_user_id_user_id_fk",
           "tableFrom": "lecturers",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -391,12 +369,8 @@
           "name": "lecturers_institution_id_institutions_id_fk",
           "tableFrom": "lecturers",
           "tableTo": "institutions",
-          "columnsFrom": [
-            "institution_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["institution_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -406,16 +380,12 @@
         "lecturers_lecturer_id_unique": {
           "name": "lecturers_lecturer_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "lecturer_id"
-          ]
+          "columns": ["lecturer_id"]
         },
         "lecturers_user_id_unique": {
           "name": "lecturers_user_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_id"
-          ]
+          "columns": ["user_id"]
         }
       },
       "policies": {},
@@ -483,12 +453,8 @@
           "name": "session_user_id_user_id_fk",
           "tableFrom": "session",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -498,9 +464,7 @@
         "session_token_unique": {
           "name": "session_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token"
-          ]
+          "columns": ["token"]
         }
       },
       "policies": {},
@@ -572,12 +536,8 @@
           "name": "student_institutions_student_id_students_id_fk",
           "tableFrom": "student_institutions",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -585,12 +545,8 @@
           "name": "student_institutions_institution_id_institutions_id_fk",
           "tableFrom": "student_institutions",
           "tableTo": "institutions",
-          "columnsFrom": [
-            "institution_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["institution_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -638,12 +594,8 @@
           "name": "student_lecturers_student_id_students_id_fk",
           "tableFrom": "student_lecturers",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -651,12 +603,8 @@
           "name": "student_lecturers_lecturer_id_lecturers_id_fk",
           "tableFrom": "student_lecturers",
           "tableTo": "lecturers",
-          "columnsFrom": [
-            "lecturer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["lecturer_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -719,12 +667,8 @@
           "name": "students_user_id_user_id_fk",
           "tableFrom": "students",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -734,16 +678,12 @@
         "students_student_id_unique": {
           "name": "students_student_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "student_id"
-          ]
+          "columns": ["student_id"]
         },
         "students_user_id_unique": {
           "name": "students_user_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_id"
-          ]
+          "columns": ["user_id"]
         }
       },
       "policies": {},
@@ -827,9 +767,7 @@
         "user_email_unique": {
           "name": "user_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -892,29 +830,17 @@
     "public.institution_status": {
       "name": "institution_status",
       "schema": "public",
-      "values": [
-        "operational",
-        "active_domain"
-      ]
+      "values": ["operational", "active_domain"]
     },
     "public.invite_status": {
       "name": "invite_status",
       "schema": "public",
-      "values": [
-        "pending",
-        "accepted",
-        "expired",
-        "revoked"
-      ]
+      "values": ["pending", "accepted", "expired", "revoked"]
     },
     "public.lecturer_institution_connection": {
       "name": "lecturer_institution_connection",
       "schema": "public",
-      "values": [
-        "placeholder",
-        "pending",
-        "verified"
-      ]
+      "values": ["placeholder", "pending", "verified"]
     },
     "public.lecturer_status": {
       "name": "lecturer_status",
@@ -930,35 +856,22 @@
     "public.matric_verification_mode": {
       "name": "matric_verification_mode",
       "schema": "public",
-      "values": [
-        "programmatic",
-        "manual"
-      ]
+      "values": ["programmatic", "manual"]
     },
     "public.matric_verification_status": {
       "name": "matric_verification_status",
       "schema": "public",
-      "values": [
-        "pending",
-        "approved",
-        "rejected"
-      ]
+      "values": ["pending", "approved", "rejected"]
     },
     "public.student_institution_status": {
       "name": "student_institution_status",
       "schema": "public",
-      "values": [
-        "pending",
-        "full"
-      ]
+      "values": ["pending", "full"]
     },
     "public.student_type": {
       "name": "student_type",
       "schema": "public",
-      "values": [
-        "enthusiast",
-        "standard"
-      ]
+      "values": ["enthusiast", "standard"]
     }
   },
   "schemas": {},
