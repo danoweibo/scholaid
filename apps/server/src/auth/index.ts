@@ -1,8 +1,8 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { openAPI, admin } from "better-auth/plugins";
-import { db } from "@/db/index";
-import * as schema from "@/db/schema";
+import { db } from "@/db/index.js";
+import * as schema from "@/db/schema.js";
 import { createUserProfileHook } from "./hooks/create-user-profile.hook.js";
 
 export const auth = betterAuth({

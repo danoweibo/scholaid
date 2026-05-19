@@ -1,7 +1,7 @@
-import type { User } from 'better-auth';
-import { db } from '@/db/index';
-import { students, lecturers, institutions } from '@/db/schema';
-import { generatePublicId } from '@/lib/utils/id';
+import type { User } from "better-auth";
+import { db } from "@/db/index.js";
+import { students, lecturers, institutions } from "@/db/schema.js";
+import { generatePublicId } from "@/lib/utils/id.js";
 
 type ScholaidUser = User & {
   scholaidRole?: string;
@@ -12,28 +12,28 @@ export async function createUserProfileHook(user: ScholaidUser): Promise<void> {
   const { id, scholaidRole, institutionName } = user;
 
   switch (scholaidRole) {
-    case 'student':
+    case "student":
       await db.insert(students).values({
         userId: id,
-        studentId: await generatePublicId('STU'),
-        type: 'enthusiast',
+        studentId: await generatePublicId("STU"),
+        type: "enthusiast",
       });
       break;
 
-    case 'lecturer':
+    case "lecturer":
       await db.insert(lecturers).values({
         userId: id,
-        lecturerId: await generatePublicId('LEC'),
-        status: 'standalone_no_students',
+        lecturerId: await generatePublicId("LEC"),
+        status: "standalone_no_students",
       });
       break;
 
-    case 'institution':
+    case "institution":
       await db.insert(institutions).values({
         adminUserId: id,
-        institutionId: await generatePublicId('INST'),
-        name: institutionName ?? 'Unnamed Institution',
-        status: 'operational',
+        institutionId: await generatePublicId("INST"),
+        name: institutionName ?? "Unnamed Institution",
+        status: "operational",
       });
       break;
 
