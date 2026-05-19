@@ -4,10 +4,10 @@ import { adminClient } from "better-auth/client/plugins";
 type AuthClient = ReturnType<typeof createAuthClient>;
 
 export const authClient: AuthClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_URL ?? "http://localhost:5000",
+  baseURL: "",
   basePath: "/api/auth",
   fetchOptions: {
-    credentials: "include", // sends cookie cross-origin to backboard.scholaid.co
+    credentials: "include",
   },
   plugins: [adminClient()],
 });
