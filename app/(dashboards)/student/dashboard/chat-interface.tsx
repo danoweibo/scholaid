@@ -110,9 +110,9 @@ export default function ChatInterface() {
         </div>
         <div>
           <p className="text-sm leading-none font-medium text-zinc-900 dark:text-zinc-100">
-            Gemini Flash
+            Scholaid Assist
           </p>
-          <p className="mt-0.5 text-xs text-zinc-400">gemini-1.5-flash</p>
+          <p className="mt-0.5 text-xs text-zinc-400">Student Companion</p>
         </div>
         <div className="ml-auto h-2 w-2 rounded-full bg-green-500" />
       </header>
@@ -134,7 +134,7 @@ export default function ChatInterface() {
               How can I help you today?
             </p>
             <p className="max-w-xs text-sm text-zinc-400">
-              Powered by Gemini 1.5 Flash. Fast, free, and ready to assist.
+              Powered by Claude Anthropic.
             </p>
           </div>
         )}
