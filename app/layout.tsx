@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
-import { Geist, Noto_Sans, Instrument_Sans } from "next/font/google";
+import { Noto_Sans, Instrument_Sans } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   apfelGrotezk,
