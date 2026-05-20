@@ -1,0 +1,272 @@
+[
+  {
+    "id": 1,
+    "assessment": "Advanced Algorithms and Machine Learning - Midterms",
+    "code": "CSC 402",
+    "status": "Complete",
+    "score": 36,
+    "target": 35,
+    "student": "David Alabi"
+  },
+  {
+    "id": 2,
+    "assessment": "Linear Algebra and Computational Methods - Homework",
+    "code": "MTH 301",
+    "status": "Awaiting submission",
+    "score": 0,
+    "target": 27,
+    "student": "Temi Adebayo"
+  },
+  {
+    "id": 3,
+    "assessment": "Database Systems and Design - Test",
+    "code": "CSC 303",
+    "status": "Complete",
+    "score": 31,
+    "target": 30,
+    "student": "Cynthia Nwoke"
+  },
+  {
+    "id": 4,
+    "assessment": "Probability Theory and Statistics - Exercise",
+    "code": "STT 307",
+    "status": "Awaiting submission",
+    "score": 0,
+    "target": 22,
+    "student": "Chimaka Ugwe"
+  },
+  {
+    "id": 5,
+    "assessment": "Software Engineering Principles - Project",
+    "code": "CSC 205",
+    "status": "Complete",
+    "score": 39,
+    "target": 38,
+    "student": "Aisha Bello"
+  },
+  {
+    "id": 6,
+    "assessment": "Discrete Mathematics and Logic - Homework",
+    "code": "MTH 403",
+    "status": "Complete",
+    "score": 21,
+    "target": 20,
+    "student": "Tunde Ogunleye"
+  },
+  {
+    "id": 7,
+    "assessment": "Computer Networks and Security - Test",
+    "code": "CSC 402",
+    "status": "Awaiting submission",
+    "score": 0,
+    "target": 25,
+    "student": "Mary Okafor"
+  },
+  {
+    "id": 8,
+    "assessment": "Data Structures and Optimization - Midterms",
+    "code": "CSC 303",
+    "status": "Complete",
+    "score": 34,
+    "target": 33,
+    "student": "Seyi Adekunle"
+  },
+  {
+    "id": 9,
+    "assessment": "Statistical Modelling and Inference - Exercise",
+    "code": "STT 409",
+    "status": "Complete",
+    "score": 27,
+    "target": 30,
+    "student": "Ifeanyi Eze"
+  },
+  {
+    "id": 10,
+    "assessment": "Artificial Intelligence Fundamentals - Project",
+    "code": "CSC 402",
+    "status": "Awaiting submission",
+    "score": 0,
+    "target": 22,
+    "student": "Grace Edet"
+  },
+  {
+    "id": 11,
+    "assessment": "Calculus and Numerical Analysis - Test",
+    "code": "MTH 301",
+    "status": "Complete",
+    "score": 29,
+    "target": 27,
+    "student": "Bamidele Lawal"
+  },
+  {
+    "id": 12,
+    "assessment": "Operating Systems Architecture - Homework",
+    "code": "CSC 205",
+    "status": "Awaiting submission",
+    "score": 0,
+    "target": 20,
+    "student": "Chioma Nnamdi"
+  },
+  {
+    "id": 13,
+    "assessment": "Machine Learning and Predictive Analytics - Midterms",
+    "code": "CSC 402",
+    "status": "Complete",
+    "score": 40,
+    "target": 38,
+    "student": "Kelvin Omoruyi"
+  },
+  {
+    "id": 14,
+    "assessment": "Theory of Computation - Exercise",
+    "code": "CSC 303",
+    "status": "Awaiting submission",
+    "score": 0,
+    "target": 25,
+    "student": "Fatima Musa"
+  },
+  {
+    "id": 15,
+    "assessment": "Statistical Data Mining - Project",
+    "code": "STT 307",
+    "status": "Complete",
+    "score": 33,
+    "target": 30,
+    "student": "Emeka Obi"
+  },
+  {
+    "id": 16,
+    "assessment": "Cloud Computing and Distributed Systems - Homework",
+    "code": "CSC 402",
+    "status": "Complete",
+    "score": 28,
+    "target": 27,
+    "student": "Daniel Akinola"
+  },
+  {
+    "id": 17,
+    "assessment": "Advanced Calculus and Differential Equations - Test",
+    "code": "MTH 403",
+    "status": "Awaiting submission",
+    "score": 0,
+    "target": 22,
+    "student": "Bisola Aderemi"
+  },
+  {
+    "id": 18,
+    "assessment": "Cybersecurity and Ethical Hacking - Project",
+    "code": "CSC 303",
+    "status": "Complete",
+    "score": 37,
+    "target": 35,
+    "student": "Michael Nwafor"
+  },
+  {
+    "id": 19,
+    "assessment": "Statistical Computing and Visualization - Exercise",
+    "code": "STT 409",
+    "status": "Awaiting submission",
+    "score": 0,
+    "target": 25,
+    "student": "Ovie Efe"
+  },
+  {
+    "id": 20,
+    "assessment": "Human Computer Interaction - Midterms",
+    "code": "CSC 205",
+    "status": "Complete",
+    "score": 32,
+    "target": 30,
+    "student": "Esther Okonkwo"
+  },
+  {
+    "id": 21,
+    "assessment": "Compiler Design and Language Processing - Homework",
+    "code": "CSC 402",
+    "status": "Awaiting submission",
+    "score": 0,
+    "target": 20,
+    "student": "Yusuf Garba"
+  },
+  {
+    "id": 22,
+    "assessment": "Mathematical Modelling and Simulation - Project",
+    "code": "MTH 301",
+    "status": "Complete",
+    "score": 35,
+    "target": 33,
+    "student": "Kehinde Afolayan"
+  },
+  {
+    "id": 23,
+    "assessment": "Data Communication and Networking - Test",
+    "code": "CSC 303",
+    "status": "Complete",
+    "score": 24,
+    "target": 22,
+    "student": "Precious Ezeani"
+  },
+  {
+    "id": 24,
+    "assessment": "Software Testing and Quality Assurance - Exercise",
+    "code": "CSC 205",
+    "status": "Awaiting submission",
+    "score": 0,
+    "target": 20,
+    "student": "Tosin Adeyemi"
+  },
+  {
+    "id": 25,
+    "assessment": "Bayesian Statistics and Probability Models - Midterms",
+    "code": "STT 307",
+    "status": "Complete",
+    "score": 30,
+    "target": 30,
+    "student": "Chidera Umeh"
+  },
+  {
+    "id": 26,
+    "assessment": "Mobile Application Development - Project",
+    "code": "CSC 402",
+    "status": "Complete",
+    "score": 38,
+    "target": 35,
+    "student": "Mubarak Sani"
+  },
+  {
+    "id": 27,
+    "assessment": "Numerical Methods and Scientific Computing - Homework",
+    "code": "MTH 403",
+    "status": "Awaiting submission",
+    "score": 0,
+    "target": 25,
+    "student": "Yetunde Balogun"
+  },
+  {
+    "id": 28,
+    "assessment": "Artificial Neural Networks - Test",
+    "code": "CSC 402",
+    "status": "Complete",
+    "score": 34,
+    "target": 33,
+    "student": "Samuel Okorie"
+  },
+  {
+    "id": 29,
+    "assessment": "Database Administration and Security - Exercise",
+    "code": "CSC 303",
+    "status": "Awaiting submission",
+    "score": 0,
+    "target": 22,
+    "student": "Hadiza Suleiman"
+  },
+  {
+    "id": 30,
+    "assessment": "Regression Analysis and Forecasting - Homework",
+    "code": "STT 409",
+    "status": "Complete",
+    "score": 26,
+    "target": 25,
+    "student": "Ejiro Akpevwe"
+  }
+]
