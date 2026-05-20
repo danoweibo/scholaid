@@ -45,7 +45,7 @@ export function SiteHeader() {
         />
 
         <motion.h1 variants={fadeUp} className="text-lg tracking-tight">
-          {greeting}, {DISPLAY_NAME}
+          {greeting}, <span className="font-bold">{DISPLAY_NAME}</span>
         </motion.h1>
       </div>
     </header>

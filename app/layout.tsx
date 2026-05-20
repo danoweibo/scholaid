@@ -14,7 +14,6 @@ import {
 import { siteMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 import { LenisProvider } from "@/providers/lenis";
-import { ThemeProvider } from "@/providers/theme";
 import type { Metadata } from "next";
 
 const instrumentSansHeading = Instrument_Sans({
@@ -43,17 +42,11 @@ export default function RootLayout({
       <body
         className={` ${apfelGrotezk.variable} ${apfelGrotezkFett.variable} ${apfelGrotezkMittel.variable} ${momoTrustDisplay.variable} ${patuaOne.variable} ${protestStrike.variable} ${sketchup.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <TooltipProvider>
-            <LenisProvider>{children}</LenisProvider>
-          </TooltipProvider>
-          {/* <GooeyToaster /> */}
-        </ThemeProvider>
+        <TooltipProvider>
+          <LenisProvider>{children}</LenisProvider>
+        </TooltipProvider>
+        {/* <GooeyToaster /> */}
+
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>

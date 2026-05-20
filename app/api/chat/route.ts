@@ -8,7 +8,6 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    // 1. Pass the system instruction here as a plain string
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash",
       systemInstruction: `You are an academic tutor helping university students with their coursework.
@@ -17,17 +16,20 @@ You do NOT write assignments for students — instead guide them to the answer.
 Keep explanations clear and encourage critical thinking.`,
     });
 
-    // All messages except the last one become history
-    const history = messages.slice(0, -1).map((msg: any) => ({
+    // Map to Gemini roles
+    const allHistory = messages.slice(0, -1).map((msg: any) => ({
       role: msg.role === "assistant" ? "model" : "user",
       parts: [{ text: msg.content }],
     }));
 
+    // Gemini requires history to start with a 'user' turn — drop any leading model messages
+    const firstUserIndex = allHistory.findIndex((m: any) => m.role === "user");
+    const history =
+      firstUserIndex > 0 ? allHistory.slice(firstUserIndex) : allHistory;
+
     const lastMessage = messages[messages.length - 1].content;
 
-    // 2. startChat only needs the history now
     const chat = model.startChat({ history });
-
     const result = await chat.sendMessageStream(lastMessage);
 
     const readable = new ReadableStream({
@@ -52,10 +54,7 @@ Keep explanations clear and encourage critical thinking.`,
     console.error("Gemini API error:", err?.message ?? err);
     return new Response(
       JSON.stringify({ error: err?.message ?? "Unknown error" }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      },
+      { status: 500, headers: { "Content-Type": "application/json" } },
     );
   }
 }

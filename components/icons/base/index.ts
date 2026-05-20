@@ -3,3 +3,4 @@ export { CodeIcon } from "./code";
 export { TeamIcon } from "./team";
 export { CloudIcon } from "./cloud";
 export { DollarIcon } from "./dollar";
+export { SilhouetteIcon } from "./silhouette";

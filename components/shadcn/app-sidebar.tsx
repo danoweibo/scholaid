@@ -1,22 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  ChartHistogramIcon,
-  Folder01Icon,
-  UserGroupIcon,
-  Camera01Icon,
-  File01Icon,
-  Settings05Icon,
-  HelpCircleIcon,
-  SearchIcon,
-  Database01Icon,
-  Analytics01Icon,
-  Analytics02Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
-import { NavDocuments } from "@/components/shadcn/nav-documents";
 import { NavMain } from "@/components/shadcn/nav-main";
 import { NavSecondary } from "@/components/shadcn/nav-secondary";
 import { NavUser } from "@/components/shadcn/nav-user";
@@ -30,118 +15,38 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Overview",
-      url: "#",
-      icon: <HugeiconsIcon icon={Analytics02Icon} strokeWidth={2} />,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: <HugeiconsIcon icon={ChartHistogramIcon} strokeWidth={2} />,
-    },
-    {
-      title: "Assessments",
-      url: "#",
-      icon: <HugeiconsIcon icon={Folder01Icon} strokeWidth={2} />,
-    },
-    {
-      title: "Classrooms",
-      url: "#",
-      icon: <HugeiconsIcon icon={UserGroupIcon} strokeWidth={2} />,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: <HugeiconsIcon icon={Camera01Icon} strokeWidth={2} />,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: <HugeiconsIcon icon={File01Icon} strokeWidth={2} />,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: <HugeiconsIcon icon={File01Icon} strokeWidth={2} />,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "#",
-      icon: <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />,
-    },
-    {
-      title: "Guides",
-      url: "#",
-      icon: <HugeiconsIcon icon={HelpCircleIcon} strokeWidth={2} />,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: <HugeiconsIcon icon={SearchIcon} strokeWidth={2} />,
-    },
-  ],
-  documents: [
-    {
-      name: "Courseware",
-      url: "#",
-      icon: <HugeiconsIcon icon={Database01Icon} strokeWidth={2} />,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: <HugeiconsIcon icon={Analytics01Icon} strokeWidth={2} />,
-    },
-    {
-      name: "Submissions",
-      url: "#",
-      icon: <HugeiconsIcon icon={File01Icon} strokeWidth={2} />,
-    },
-  ],
+type NavItem = {
+  title: string;
+  url: string;
+  icon: React.ReactNode;
 };
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+type NavActionItem = NavItem & { tooltip?: string };
+
+type NavAction = {
+  primary: NavActionItem;
+  secondary: NavItem;
+};
+
+type NavMainGroup = {
+  isGroup: boolean;
+  label?: string;
+};
+
+export function AppSidebar({
+  logo,
+  menuItems,
+  secondaryItems,
+  mainNavGroup,
+  navAction,
+  ...props
+}: {
+  logo: string;
+  menuItems: NavItem[];
+  secondaryItems: NavItem[];
+  mainNavGroup: NavMainGroup;
+  navAction?: NavAction;
+} & React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -152,7 +57,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               render={<a href="#" />}
             >
               <Image
-                src="/images/logotype-1.png"
+                src={logo}
                 alt="Scholaid"
                 width={120}
                 height={30}
@@ -164,9 +69,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain
+          groupLabel={mainNavGroup.label}
+          showGroupLabel={mainNavGroup.isGroup}
+          items={menuItems}
+          navAction={navAction}
+        />
+        <NavSecondary items={secondaryItems} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
