@@ -8,11 +8,24 @@ import { AssessmentCard } from "@/components/assessment-card";
 import { OUTSTANDING } from "@/lib/demo";
 import { fadeUp, stagger } from "@/lib/motion";
 
+// Mirror the shape AssessmentCard expects
+type Assessment = (typeof OUTSTANDING)[number];
+
+const ACTION_LABEL: Record<string, string> = {
+  submit_file: "Submit File",
+  add_link: "Add Link",
+  join_classroom: "Join Classroom",
+};
+
+const ACTION_HINT: Record<string, string> = {
+  submit_file: "Upload a PDF or DOCX",
+  add_link: "Paste a link to submit",
+  join_classroom: "Join the live class",
+};
+
 export default function AssessmentsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  // Drawer is open when ?drawer=create is in the URL
   const drawer = searchParams.get("drawer") === "create";
 
   function openDrawer() {
@@ -34,6 +47,33 @@ export default function AssessmentsPage() {
     action: "submit_file",
     due: "",
   });
+
+  const [created, setCreated] = useState<Assessment[]>([]);
+  const allAssessments = [...created, ...OUTSTANDING];
+
+  function handleCreate() {
+    if (!form.title.trim()) return;
+    const newItem: Assessment = {
+      id: Math.random().toString(36).slice(2),
+      title: form.title.trim(),
+      description: form.description.trim() || "No description provided.",
+      category: form.category as Assessment["category"],
+      action: form.action as Assessment["action"],
+      actionLabel: ACTION_LABEL[form.action],
+      hint: ACTION_HINT[form.action],
+      due: form.due || "No due date",
+      lecturer: "You",
+    };
+    setCreated((prev) => [newItem, ...prev]);
+    setForm({
+      title: "",
+      description: "",
+      category: "Assignment",
+      action: "submit_file",
+      due: "",
+    });
+    closeDrawer();
+  }
 
   return (
     <motion.div
@@ -67,7 +107,7 @@ export default function AssessmentsPage() {
       </motion.div>
 
       <motion.div variants={stagger} className="space-y-4">
-        {OUTSTANDING.map((a, i) => (
+        {allAssessments.map((a, i) => (
           <AssessmentCard
             key={a.id}
             a={a}
@@ -79,14 +119,14 @@ export default function AssessmentsPage() {
                     className="h-2 w-2 rounded-full"
                     style={{ background: "var(--chart-2)" }}
                   />
-                  Submitted: 3
+                  Submitted: 0
                 </span>
                 <span className="flex items-center gap-1.5">
                   <span
                     className="h-2 w-2 rounded-full"
                     style={{ background: "var(--chart-1)" }}
                   />
-                  Outstanding: 5
+                  Outstanding: 0
                 </span>
               </div>
             }
@@ -134,6 +174,7 @@ export default function AssessmentsPage() {
                 <input
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
+                  placeholder="e.g. Week 4 Assignment"
                   className="focus:border-primary w-full rounded-xl border bg-transparent px-3 py-2 text-sm outline-none"
                 />
               </Field>
@@ -174,10 +215,11 @@ export default function AssessmentsPage() {
                 />
               </Field>
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={closeDrawer}
-                className="mt-4 w-full rounded-full py-3 text-sm font-medium text-white"
+                whileHover={{ scale: form.title.trim() ? 1.02 : 1 }}
+                whileTap={{ scale: form.title.trim() ? 0.98 : 1 }}
+                onClick={handleCreate}
+                disabled={!form.title.trim()}
+                className="mt-4 w-full rounded-full py-3 text-sm font-medium text-white disabled:opacity-50"
                 style={{ background: "var(--primary)" }}
               >
                 Create assessment

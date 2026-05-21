@@ -64,7 +64,7 @@ export default function CoursewarePage() {
   function addFiles(files: FileList | null) {
     if (!files || files.length === 0) return;
     const next: Item[] = Array.from(files).map((f) => ({
-      id: crypto.randomUUID(),
+      id: Math.random().toString(36).slice(2),
       name: f.name,
       course,
       size: fmtSize(f.size),
