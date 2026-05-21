@@ -1,11 +1,11 @@
 import {
-  Settings05Icon,
   SearchIcon,
   Analytics02Icon,
   Clock05Icon,
   CheckmarkSquare03Icon,
   DocumentAttachmentIcon,
   InboxCheckIcon,
+  UserGroupIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ConditionalChatFab } from "@/components/conditional-chat-fab";
@@ -44,9 +44,9 @@ const menus = {
   ],
   navSecondary: [
     {
-      title: "Settings",
-      url: "/student/settings",
-      icon: <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />,
+      title: "Classrooms",
+      url: "/student/classrooms",
+      icon: <HugeiconsIcon icon={UserGroupIcon} strokeWidth={2} />,
     },
     {
       title: "Search",
