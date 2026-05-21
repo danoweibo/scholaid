@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Mic,
   MicOff,
@@ -11,14 +11,52 @@ import {
   Users,
 } from "lucide-react";
 import { motion } from "motion/react";
+import { toast } from "sonner";
 import Link from "next/link";
+import { AttendanceToast } from "@/components/attendance-toast";
 import { STUDENTS } from "@/lib/demo";
 import { fadeUp, stagger } from "@/lib/motion";
+import { pusherClient } from "@/lib/pusher";
 
 export default function StudentClassroomPage() {
   const [mic, setMic] = useState(true);
   const [cam, setCam] = useState(true);
   const tiles = [{ id: "you", name: "Daniel (You)" }, ...STUDENTS.slice(0, 3)];
+
+  useEffect(() => {
+    const channel = pusherClient.subscribe("classroom");
+
+    channel.bind(
+      "question-fired",
+      (data: {
+        question: string;
+        options: string[];
+        correct: number;
+        target: string;
+        mode: "general" | "specific";
+      }) => {
+        toast.custom(
+          (id) => (
+            <AttendanceToast
+              question={data.question}
+              options={data.options}
+              onAnswer={(a) => {
+                toast.dismiss(id);
+                toast.success(`You answered: ${a}`);
+              }}
+              onExpire={() => toast.dismiss(id)}
+            />
+          ),
+          { duration: 10000 },
+        );
+      },
+    );
+
+    return () => {
+      channel.unbind_all();
+      pusherClient.unsubscribe("classroom");
+    };
+  }, []);
 
   return (
     <motion.div
@@ -93,8 +131,6 @@ export default function StudentClassroomPage() {
             <ScreenShare className="h-4 w-4" />
           </ControlBtn>
           <Link href="/student/dashboard">
-            {" "}
-            {/* ← to → href */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

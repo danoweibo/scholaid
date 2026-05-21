@@ -70,7 +70,7 @@ export default function LecturerClassroom() {
     }
   }
 
-  function fire() {
+  async function fire() {
     if (cooldown > 0 || !question.trim()) return;
     setCooldown(15);
     const interval = setInterval(() => {
@@ -82,30 +82,35 @@ export default function LecturerClassroom() {
         return c - 1;
       });
     }, 1000);
+
     const targetName =
       mode === "general"
         ? "All students"
         : (STUDENTS.find((s) => s.id === targetStudent)?.name ?? "Student");
+
     setHistory((h) => [
       { q: question, ts: new Date().toLocaleTimeString(), target: targetName },
       ...h,
     ]);
-    toast.custom(
-      (id) => (
-        <AttendanceToast
-          question={
-            mode === "specific" ? `[For ${targetName}] ${question}` : question
-          }
-          options={options}
-          onAnswer={(a) => {
-            toast.dismiss(id);
-            toast.success(`Answer from ${targetName}: ${a}`);
-          }}
-          onExpire={() => toast.dismiss(id)}
-        />
-      ),
-      { duration: 10000 },
-    );
+
+    // Broadcast via Pusher
+    try {
+      await fetch("/api/classroom/fire", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          question:
+            mode === "specific" ? `[For ${targetName}] ${question}` : question,
+          options,
+          correct,
+          target: targetName,
+          mode,
+        }),
+      });
+      toast.success(`Question fired to ${targetName}`);
+    } catch {
+      toast.error("Failed to broadcast question");
+    }
   }
 
   return (
