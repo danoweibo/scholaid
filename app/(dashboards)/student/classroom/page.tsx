@@ -16,7 +16,7 @@ import Link from "next/link";
 import { AttendanceToast } from "@/components/attendance-toast";
 import { STUDENTS } from "@/lib/demo";
 import { fadeUp, stagger } from "@/lib/motion";
-import { pusherClient } from "@/lib/pusher";
+import { getPusherClient } from "@/lib/pusher/client";
 
 export default function StudentClassroomPage() {
   const [mic, setMic] = useState(true);
@@ -24,7 +24,10 @@ export default function StudentClassroomPage() {
   const tiles = [{ id: "you", name: "Daniel (You)" }, ...STUDENTS.slice(0, 3)];
 
   useEffect(() => {
-    const channel = pusherClient.subscribe("classroom");
+    const pusher = getPusherClient();
+    if (!pusher) return; // shouldn't happen inside useEffect, but satisfies TS
+
+    const channel = pusher.subscribe("classroom");
 
     channel.bind(
       "question-fired",
@@ -54,7 +57,7 @@ export default function StudentClassroomPage() {
 
     return () => {
       channel.unbind_all();
-      pusherClient.unsubscribe("classroom");
+      pusher.unsubscribe("classroom");
     };
   }, []);
 
