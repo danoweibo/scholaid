@@ -45,7 +45,7 @@ const menus = {
   navSecondary: [
     {
       title: "Classrooms",
-      url: "/student/classrooms",
+      url: "/student/classroom",
       icon: <HugeiconsIcon icon={UserGroupIcon} strokeWidth={2} />,
     },
     {
