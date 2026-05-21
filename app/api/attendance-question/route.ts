@@ -63,6 +63,8 @@ export async function POST(req: NextRequest) {
     });
   } catch (err) {
     console.error("Attendance question error:", err);
-    return NextResponse.json(fallback(topic, "Could not generate question."));
+    return NextResponse.json(
+      fallback(topic, "Claude API Inference is experiencing heavy traffic."),
+    );
   }
 }

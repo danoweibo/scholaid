@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { Noto_Sans, Instrument_Sans } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   apfelGrotezk,
@@ -45,6 +46,7 @@ export default function RootLayout({
         <TooltipProvider>
           <LenisProvider>{children}</LenisProvider>
         </TooltipProvider>
+        <Toaster />
         {/* <GooeyToaster /> */}
 
         {process.env.NODE_ENV === "production" && <Analytics />}

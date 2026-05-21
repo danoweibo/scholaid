@@ -53,7 +53,7 @@ export default function StudentOverviewPage() {
           label="Submitted"
           value={2}
           caption="Check progress"
-          to="/student/submitted"
+          to="/student/submissions"
           variant="submitted"
           index={1}
         />

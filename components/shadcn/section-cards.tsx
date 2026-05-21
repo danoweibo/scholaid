@@ -19,7 +19,7 @@ export function SectionCards() {
         <CardHeader>
           <CardDescription>Total Students</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            212
+            0
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
@@ -47,7 +47,7 @@ export function SectionCards() {
         <CardHeader>
           <CardDescription>Average Performance</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            78%
+            0
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
@@ -73,9 +73,9 @@ export function SectionCards() {
 
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Active Courses</CardDescription>
+          <CardDescription>Pending Submissions</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            9
+            0
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
@@ -101,9 +101,9 @@ export function SectionCards() {
 
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Tests Conducted</CardDescription>
+          <CardDescription>Assessment Tests</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            51
+            0
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
@@ -122,7 +122,7 @@ export function SectionCards() {
             />
           </div>
           <div className="text-muted-foreground">
-            AI-generated CBT usage increased significantly
+            AI-generated popup tests increased significantly
           </div>
         </CardFooter>
       </Card>
