@@ -8,7 +8,7 @@ import { getSession } from "@/lib/auth/middleware";
 function roleDashboard(role: string): string {
   if (role === "lecturer") return "/lecturer/dashboard";
   if (role === "institution") return "/institution/dashboard";
-  return "/student/dashboard"; // default / student
+  return "/student/dashboard";
 }
 
 function redirect(req: NextRequest, path: string): NextResponse {
@@ -22,38 +22,24 @@ function redirect(req: NextRequest, path: string): NextResponse {
 export async function proxy(req: NextRequest) {
   const { pathname, searchParams } = req.nextUrl;
 
-  // ── 1. Better-auth verify-email callback ──────────────────────────────────
-  // Better-auth lands on /?token=... or /api/auth/callback?... after email
-  // verification. We detect the token on the root path and redirect to the
-  // success page, letting better-auth's own handler do the verification first
-  // via the /api/auth route (which is excluded from this middleware below).
-  //
-  // The real intercept: after better-auth verifies and auto-signs the user in
-  // it redirects to "/". We catch that landing, check for a fresh verified
-  // session, and forward to the success page instead.
-  if (pathname === "/") {
+  // ── 1. Verify-email callback ───────────────────────────────────────────────
+  // better-auth redirects to /?verified=true after email verification.
+  // Signed-in users on "/" are otherwise left alone (homepage is public).
+  if (pathname === "/" && searchParams.get("verified") === "true") {
     const session = await getSession(req);
-    if (session?.user) {
-      // User just landed on "/" while authenticated — came from verification
-      // link or direct navigation. Either way, route them purposefully.
-      const fromVerify = searchParams.get("verified") === "true";
-      if (fromVerify) {
-        return redirect(req, "/verify-email/success");
-      }
-      // Authenticated users hitting "/" go straight to their dashboard
-      return redirect(req, roleDashboard(session.user.scholaidRole));
-    }
+    if (session?.user) return redirect(req, "/verify-email/success");
+    // Token invalid / session not established — just show the homepage
     return NextResponse.next();
   }
 
-  // ── 2. /dashboard → role dashboard (or signin if no session) ─────────────
+  // ── 2. /dashboard → role dashboard (or signin if no session) ──────────────
   if (pathname === "/dashboard") {
     const session = await getSession(req);
     if (!session?.user) return redirect(req, "/signin");
     return redirect(req, roleDashboard(session.user.scholaidRole));
   }
 
-  // ── 3. Role root shortcuts ────────────────────────────────────────────────
+  // ── 3. Role root shortcuts ─────────────────────────────────────────────────
   // /student → /student/dashboard, /lecturer → /lecturer/dashboard, etc.
   if (
     pathname === "/student" ||
@@ -63,16 +49,15 @@ export async function proxy(req: NextRequest) {
     return redirect(req, `${pathname}/dashboard`);
   }
 
-  // ── 4. Auth pages (signin / signup) redirect away if already signed in ────
+  // ── 4. Auth pages — bounce signed-in users to their dashboard ─────────────
   if (pathname === "/signin" || pathname === "/signup") {
     const session = await getSession(req);
-    if (session?.user) {
+    if (session?.user)
       return redirect(req, roleDashboard(session.user.scholaidRole));
-    }
     return NextResponse.next();
   }
 
-  // ── 5. Protected dashboard routes — must be signed in ────────────────────
+  // ── 5. Protected dashboard routes ─────────────────────────────────────────
   const isProtected =
     pathname.startsWith("/student/") ||
     pathname.startsWith("/lecturer/") ||
@@ -80,9 +65,7 @@ export async function proxy(req: NextRequest) {
 
   if (isProtected) {
     const session = await getSession(req);
-    if (!session?.user) {
-      return redirect(req, `/signin`);
-    }
+    if (!session?.user) return redirect(req, "/signin");
 
     // Role enforcement — prevent cross-role access
     const role = session.user.scholaidRole;
