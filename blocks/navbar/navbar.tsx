@@ -11,6 +11,8 @@ import {
   CodeIcon,
   DollarIcon,
 } from "@/components/icons/base";
+import { authClient } from "@/lib/auth/client";
+import type { ScholaidUser } from "@/lib/auth/types";
 
 const DESKTOP_PATH =
   "M 1152,28 C 1152,9 1148,4 1140,1.5 C 1133,0 1125,0 1116,0 L 36,0 C 27,0 19,0 12,1.5 C 4,4 0,9 0,28 C 0,47 4,52 12,54.5 C 19,56 27,56 36,56 L 1116,56 C 1125,56 1133,56 1140,54.5 C 1148,52 1152,47 1152,28 Z";
@@ -26,9 +28,124 @@ const navLinks = [
   { label: "Pricing", icon: DollarIcon },
 ];
 
+const ROLE_LABELS: Record<string, string> = {
+  student: "Student",
+  lecturer: "Lecturer",
+  institution: "Institution",
+};
+
+function getInitials(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0][0]?.toUpperCase() ?? "?";
+  return (
+    (parts[0][0]?.toUpperCase() ?? "") +
+    (parts[parts.length - 1][0]?.toUpperCase() ?? "")
+  );
+}
+
+function getRoleDashboard(role: string): string {
+  if (role === "lecturer") return "/lecturer/dashboard";
+  if (role === "institution") return "/institution/dashboard";
+  return "/student/dashboard";
+}
+
+// ---------------------------------------------------------------------------
+// User chip — shown in nav when signed in
+// ---------------------------------------------------------------------------
+
+function UserChip({ user }: { user: ScholaidUser }) {
+  const initials = getInitials(user.name);
+  const roleLabel = ROLE_LABELS[user.scholaidRole] ?? user.scholaidRole;
+  const dashboard = getRoleDashboard(user.scholaidRole);
+
+  return (
+    <Link
+      href={dashboard}
+      className="group flex items-center gap-2.5 rounded-xl px-2 py-1 transition-colors hover:bg-white/10"
+    >
+      {/* Avatar */}
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25 transition-all group-hover:bg-white/20 group-hover:ring-white/40">
+        <span className="text-xs font-semibold tracking-wide text-white">
+          {initials}
+        </span>
+      </div>
+
+      {/* Name + role */}
+      <div className="flex flex-col leading-none">
+        <span className="text-sm font-medium text-white">{user.name}</span>
+        <span className="mt-0.5 text-[11px] font-normal text-white/50">
+          {roleLabel}
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Mobile user row
+// ---------------------------------------------------------------------------
+
+function MobileUserRow({
+  user,
+  onClose,
+}: {
+  user: ScholaidUser;
+  onClose: () => void;
+}) {
+  const initials = getInitials(user.name);
+  const roleLabel = ROLE_LABELS[user.scholaidRole] ?? user.scholaidRole;
+  const dashboard = getRoleDashboard(user.scholaidRole);
+
+  async function handleSignOut() {
+    await authClient.signOut();
+    onClose();
+    window.location.href = "/";
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <Link
+        href={dashboard}
+        onClick={onClose}
+        className="flex items-center gap-3 rounded-xl px-4 py-3 transition-colors hover:bg-white/10"
+      >
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25">
+          <span className="text-sm font-semibold text-white">{initials}</span>
+        </div>
+        <div className="flex flex-col leading-none">
+          <span className="text-sm font-medium text-white">{user.name}</span>
+          <span className="mt-0.5 text-xs text-white/50">{roleLabel}</span>
+        </div>
+      </Link>
+
+      <button
+        type="button"
+        onClick={handleSignOut}
+        className="rounded-xl border border-white/10 px-4 py-3 text-center text-sm font-medium text-white/60 transition-colors hover:border-white/20 hover:text-white/80"
+      >
+        Sign out
+      </button>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Navbar
+// ---------------------------------------------------------------------------
+
 export function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState<ScholaidUser | null>(null);
+  const [sessionLoaded, setSessionLoaded] = useState(false);
+
+  // Resolve session once on mount
+  useEffect(() => {
+    authClient.getSession().then(({ data }) => {
+      setUser((data?.user as ScholaidUser) ?? null);
+      setSessionLoaded(true);
+    });
+  }, []);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 1279px)");
@@ -91,18 +208,28 @@ export function Navbar() {
 
             {/* Desktop Actions */}
             <div className="hidden items-center gap-2 xl:flex">
-              <Link
-                href="/signin"
-                className="px-3 py-1.5 text-sm font-medium text-white/70 transition-colors hover:text-white"
-              >
-                Sign in
-              </Link>
-              <Link
-                href="/signup"
-                className="rounded-md border border-white/20 px-3 py-1.5 text-sm font-medium text-white/80 transition-colors hover:border-white/40 hover:text-white"
-              >
-                Sign up
-              </Link>
+              {sessionLoaded && (
+                <>
+                  {user ? (
+                    <UserChip user={user} />
+                  ) : (
+                    <>
+                      <Link
+                        href="/signin"
+                        className="px-3 py-1.5 text-sm font-medium text-white/70 transition-colors hover:text-white"
+                      >
+                        Sign in
+                      </Link>
+                      <Link
+                        href="/signup"
+                        className="rounded-md border border-white/20 px-3 py-1.5 text-sm font-medium text-white/80 transition-colors hover:border-white/40 hover:text-white"
+                      >
+                        Sign up
+                      </Link>
+                    </>
+                  )}
+                </>
+              )}
               <Link
                 href="#"
                 className="cursor-pointer rounded-lg border-b-4 border-gray-400 bg-gray-50 px-6 py-2 text-sm font-semibold text-[#19324D] transition-all hover:-translate-y-px hover:border-b-[6px] hover:brightness-110 active:translate-y-0.5 active:border-b-2 active:brightness-90"
@@ -186,20 +313,33 @@ export function Navbar() {
               transition={{ delay: 0.3, duration: 0.25 }}
               className="flex shrink-0 flex-col gap-3 border-t border-white/10 px-6 py-6"
             >
-              <Link
-                href="/signin"
-                onClick={() => setMenuOpen(false)}
-                className="rounded-xl px-4 py-3 text-center text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white"
-              >
-                Sign in
-              </Link>
-              <Link
-                href="/signup"
-                onClick={() => setMenuOpen(false)}
-                className="rounded-xl border border-white/20 px-4 py-3 text-center text-sm font-medium text-white/80 transition-colors hover:border-white/40 hover:text-white"
-              >
-                Sign up
-              </Link>
+              {sessionLoaded && (
+                <>
+                  {user ? (
+                    <MobileUserRow
+                      user={user}
+                      onClose={() => setMenuOpen(false)}
+                    />
+                  ) : (
+                    <>
+                      <Link
+                        href="/signin"
+                        onClick={() => setMenuOpen(false)}
+                        className="rounded-xl px-4 py-3 text-center text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+                      >
+                        Sign in
+                      </Link>
+                      <Link
+                        href="/signup"
+                        onClick={() => setMenuOpen(false)}
+                        className="rounded-xl border border-white/20 px-4 py-3 text-center text-sm font-medium text-white/80 transition-colors hover:border-white/40 hover:text-white"
+                      >
+                        Sign up
+                      </Link>
+                    </>
+                  )}
+                </>
+              )}
               <Link
                 href="#"
                 onClick={() => setMenuOpen(false)}
