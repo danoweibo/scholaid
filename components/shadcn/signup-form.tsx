@@ -13,8 +13,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/client";
-import { useAuthStore } from "@/lib/auth/store";
-import type { ScholaidRole, ScholaidUser } from "@/lib/auth/types";
+import type { ScholaidRole } from "@/lib/auth/types";
 import { cn } from "@/lib/utils";
 import { GoogleIcon } from "../icons/socials";
 
@@ -75,13 +74,6 @@ const ROLE_OPTIONS: {
   },
 ];
 
-function getRoleRedirect(role: ScholaidRole) {
-  if (role === "student") return "/student/dashboard";
-  if (role === "lecturer") return "/lecturer/dashboard";
-  if (role === "institution") return "/institution/dashboard";
-  return "/dashboard";
-}
-
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
@@ -112,9 +104,7 @@ export function SignupForm({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) {
     const { name, value } = e.target;
-
     setFormData((prev) => ({ ...prev, [name]: value }));
-
     if (errors[name as keyof SignUpFormData]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -122,7 +112,6 @@ export function SignupForm({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
     setServerError("");
     setErrors({});
 
@@ -130,15 +119,10 @@ export function SignupForm({
 
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof SignUpFormData, string>> = {};
-
       result.error.issues.forEach((err: z.ZodIssue) => {
         const field = err.path[0] as keyof SignUpFormData;
-
-        if (!fieldErrors[field]) {
-          fieldErrors[field] = err.message;
-        }
+        if (!fieldErrors[field]) fieldErrors[field] = err.message;
       });
-
       setErrors(fieldErrors);
       return;
     }
@@ -151,7 +135,6 @@ export function SignupForm({
         email: formData.email,
         password: formData.password,
         scholaidRole: formData.scholaidRole,
-
         ...(formData.scholaidRole === "institution" && {
           institutionName: formData.institutionName,
         }),
@@ -159,37 +142,21 @@ export function SignupForm({
 
       const signUpResult = await authClient.signUp.email(payload);
 
-      console.log("SIGNUP RESULT:", signUpResult);
-
       if (signUpResult.error) {
         setServerError(
           signUpResult.error.message ?? "Sign up failed. Please try again.",
         );
-
         return;
       }
 
-      // Wait briefly for cookie/session hydration
-      await new Promise((resolve) => setTimeout(resolve, 300));
-
-      const sessionResult = await authClient.getSession();
-
-      console.log("SESSION RESULT:", sessionResult);
-
-      if (!sessionResult.data?.user) {
-        setServerError("Account created but session could not be established.");
-
-        return;
-      }
-
-      const user = sessionResult.data.user as ScholaidUser;
-
-      router.replace(getRoleRedirect(user.scholaidRole));
-
-      router.refresh();
+      // ✅ Account created — email verification is now required.
+      // Redirect to the "check your inbox" page, carrying the email
+      // address so we can show it to the user and offer a resend link.
+      router.replace(
+        `/verify-email?email=${encodeURIComponent(formData.email)}`,
+      );
     } catch (error) {
       console.error("SIGNUP ERROR:", error);
-
       setServerError(
         error instanceof Error
           ? error.message
@@ -257,8 +224,7 @@ export function SignupForm({
             <p className="mt-1 text-xs text-red-500">{errors.email}</p>
           ) : (
             <FieldDescription>
-              We&apos;ll use this to contact you. We will not share your email
-              with anyone else.
+              We&apos;ll send a verification link here.
             </FieldDescription>
           )}
         </Field>

@@ -33,11 +33,16 @@ export function LoginForm({
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [unverified, setUnverified] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [resendMessage, setResendMessage] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setUnverified(false);
+    setResendMessage("");
 
     try {
       const { data, error } = await authClient.signIn.email({
@@ -46,7 +51,17 @@ export function LoginForm({
       });
 
       if (error) {
-        setError(error.message ?? "Sign in failed. Please try again.");
+        // Better-auth returns this code when the email isn't verified yet
+        if (
+          error.code === "EMAIL_NOT_VERIFIED" ||
+          (error.message?.toLowerCase().includes("email") &&
+            error.message?.toLowerCase().includes("verif"))
+        ) {
+          setUnverified(true);
+          setError("Please verify your email before signing in.");
+        } else {
+          setError(error.message ?? "Sign in failed. Please try again.");
+        }
         return;
       }
 
@@ -59,6 +74,25 @@ export function LoginForm({
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleResend() {
+    if (!email) {
+      setError("Enter your email address above, then click resend.");
+      return;
+    }
+
+    setResendLoading(true);
+    setResendMessage("");
+
+    try {
+      await authClient.sendVerificationEmail({ email });
+      setResendMessage("Verification email sent! Check your inbox.");
+    } catch {
+      setResendMessage("Couldn't resend — please try again in a moment.");
+    } finally {
+      setResendLoading(false);
     }
   }
 
@@ -77,8 +111,29 @@ export function LoginForm({
         </div>
 
         {error && (
-          <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-center text-sm text-red-500">
-            {error}
+          <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-center text-sm text-red-500">
+            <p>{error}</p>
+            {unverified && (
+              <div className="mt-2 flex flex-col items-center gap-1">
+                <p className="text-xs text-red-400">
+                  Didn&apos;t get the email?
+                </p>
+                <button
+                  type="button"
+                  onClick={handleResend}
+                  disabled={resendLoading}
+                  className="text-xs font-medium text-red-600 underline underline-offset-2 hover:text-red-800 disabled:opacity-50"
+                >
+                  {resendLoading ? "Sending..." : "Resend verification email"}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {resendMessage && (
+          <p className="rounded-md border border-green-200 bg-green-50 px-3 py-2 text-center text-sm text-green-600">
+            {resendMessage}
           </p>
         )}
 

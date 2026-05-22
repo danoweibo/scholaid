@@ -2,13 +2,13 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { openAPI, admin } from "better-auth/plugins";
 import { createUserProfileHook } from "@/lib/auth/hooks/create-user-profile";
+import { sendVerificationEmail } from "@/lib/mail";
 import { db } from "@/database";
 import * as schema from "@/database/schema";
 
 export const auth = betterAuth({
   basePath: "/api/auth",
   baseURL: process.env.BETTER_AUTH_URL || "http://scholaid.local:7000",
-
   secret: process.env.BETTER_AUTH_SECRET,
 
   database: drizzleAdapter(db, {
@@ -46,7 +46,20 @@ export const auth = betterAuth({
     },
   },
 
-  emailAndPassword: { enabled: true },
+  // ── Email & password ────────────────────────────────────────────────────────
+  emailAndPassword: {
+    enabled: true,
+    requireEmailVerification: true, // 🔒 blocks sign-in until email is verified
+  },
+
+  // ── Email verification ───────────────────────────────────────────────────────
+  emailVerification: {
+    sendOnSignUp: true, // fire immediately on registration
+    autoSignInAfterVerification: true, // log the user in once they click the link
+    sendVerificationEmail: async ({ user, url }) => {
+      await sendVerificationEmail({ to: user.email, name: user.name, url });
+    },
+  },
 
   plugins: [openAPI(), admin({ defaultRole: "user", adminRoles: ["admin"] })],
 });
