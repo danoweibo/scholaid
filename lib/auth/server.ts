@@ -56,7 +56,8 @@ export const auth = betterAuth({
   emailVerification: {
     sendOnSignUp: true, // fire immediately on registration
     autoSignInAfterVerification: true, // log the user in once they click the link
-    callbackURL: "/verify-email/success",
+    // After verifying, better-auth auto-signs the user in and redirects here
+    callbackURL: "/?verified=true", // middleware intercepts this and forwards to /verify-email/success
     sendVerificationEmail: async ({ user, url }) => {
       await sendVerificationEmail({ to: user.email, name: user.name, url });
     },
