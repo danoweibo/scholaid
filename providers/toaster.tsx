@@ -1,5 +1,5 @@
-import type { GooeyToasterProps } from "gooey-toast";
 import { GooeyToaster as GooeyToasterPrimitive, gooeyToast } from "gooey-toast";
+import type { GooeyToasterProps } from "gooey-toast";
 import "goey-toast/styles.css";
 
 export { gooeyToast };
