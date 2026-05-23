@@ -1,5 +1,5 @@
-import { Suspense } from "react";
 import VerifySuccessContent from "./verify-success-content";
+import { Suspense } from "react";
 
 export default function VerifySuccessPage() {
   return (

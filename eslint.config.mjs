@@ -16,11 +16,11 @@ const eslintConfig = defineConfig([
         "error",
         {
           groups: [
+            ["parent", "sibling", "index"],
+            "type",
             "builtin",
             "external",
             "internal",
-            ["parent", "sibling", "index"],
-            "type",
           ],
 
           pathGroups: [
