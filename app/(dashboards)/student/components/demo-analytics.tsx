@@ -1,7 +1,7 @@
-import data from "./data.json";
 import { ChartAreaInteractive } from "@/components/shadcn/chart-area-interactive";
 import { DataTable } from "@/components/shadcn/data-table";
 import { SectionCards } from "@/components/shadcn/section-cards";
+import data from "./data.json";
 
 function DemoAnalytics() {
   return (
