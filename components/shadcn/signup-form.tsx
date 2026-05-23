@@ -1,5 +1,6 @@
 "use client";
 
+import { GoogleIcon } from "../icons/socials";
 import { useState } from "react";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
@@ -15,7 +16,6 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/client";
 import type { ScholaidRole } from "@/lib/auth/types";
 import { cn } from "@/lib/utils";
-import { GoogleIcon } from "../icons/socials";
 
 // ---------------------------------------------------------------------------
 // Validation schema

@@ -1,4 +1,5 @@
 import "./globals.css";
+import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { Noto_Sans, Instrument_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
@@ -15,7 +16,6 @@ import {
 import { siteMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 import { LenisProvider } from "@/providers/lenis";
-import type { Metadata } from "next";
 
 const instrumentSansHeading = Instrument_Sans({
   subsets: ["latin"],
