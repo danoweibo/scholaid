@@ -1,7 +1,7 @@
+import type { User } from "better-auth";
 import { generatePublicId } from "@/lib/utils/id";
 import { db } from "@/database";
 import { students, lecturers, institutions } from "@/database/schema";
-import type { User } from "better-auth";
 
 type ScholaidUser = User & {
   scholaidRole?: string;
