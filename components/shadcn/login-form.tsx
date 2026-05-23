@@ -1,6 +1,5 @@
 "use client";
 
-import { GoogleIcon } from "../icons/socials";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -16,6 +15,7 @@ import { authClient } from "@/lib/auth/client";
 import { useAuthStore } from "@/lib/auth/store";
 import type { ScholaidUser } from "@/lib/auth/types";
 import { cn } from "@/lib/utils";
+import { GoogleIcon } from "../icons/socials";
 
 function getRoleRedirect(role: ScholaidUser["scholaidRole"]) {
   if (role === "student") return "/student/dashboard";
