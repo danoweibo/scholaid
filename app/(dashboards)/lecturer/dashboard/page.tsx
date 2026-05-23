@@ -1,4 +1,6 @@
 "use client";
+import data from "./data.json";
+import type { Variants } from "motion/react";
 import { motion, stagger } from "motion/react";
 import { AvatarRow } from "@/components/avatar-row";
 import { ChartAreaInteractive } from "@/components/shadcn/chart-area-interactive";
@@ -6,8 +8,6 @@ import { DataTable } from "@/components/shadcn/data-table";
 import { SectionCards } from "@/components/shadcn/section-cards";
 import { STUDENTS } from "@/lib/demo";
 import { fadeUp } from "@/lib/motion";
-import data from "./data.json";
-import type { Variants } from "motion/react";
 
 export default function LecturerDashboardPage() {
   return (
