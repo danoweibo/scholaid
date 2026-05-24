@@ -3,7 +3,6 @@
 -- Combines: 0000_define_scholaid_users, 0001_config_auth_roles,
 --           0002_better_auth_fields, 0003_institution_requests_store
 -- RLS: DISABLED (not used in this project)
--- Run this once in the Supabase SQL Editor on a fresh schema.
 -- =============================================================================
 
 
