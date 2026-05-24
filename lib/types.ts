@@ -3,3 +3,9 @@ export interface QuestionResult {
   options: string[];
   correct: number;
 }
+
+export interface VerificationEmailOptions {
+  to: string;
+  name: string;
+  url: string;
+}

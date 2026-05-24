@@ -1,14 +1,8 @@
 import { Resend } from "resend";
-
+import type { VerificationEmailOptions } from "@/lib/types";
 const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM = process.env.RESEND_FROM ?? "noreply@scholaid.co";
 const APP_URL = process.env.BASE_URL ?? "https://scholaid.co";
-
-interface VerificationEmailOptions {
-  to: string;
-  name: string;
-  url: string;
-}
 
 async function send(
   payload: Parameters<typeof resend.emails.send>[0],
