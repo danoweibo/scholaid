@@ -114,7 +114,7 @@ export async function inspect(token: string) {
     .from(invites)
     .where(eq(invites.token, token));
 
-  if (!invite) throw { statusCode: 404, message: "Invite not found." };
+  if (!invite) throw { statusCode: 404, message: "Invitation not found." };
   if (invite.status !== "pending")
     throw { statusCode: 400, message: `Invite is already ${invite.status}.` };
   if (invite.expiresAt < new Date()) {
@@ -122,7 +122,7 @@ export async function inspect(token: string) {
       .update(invites)
       .set({ status: "expired" })
       .where(eq(invites.id, invite.id));
-    throw { statusCode: 400, message: "Invite has expired." };
+    throw { statusCode: 400, message: "Invitation has expired." };
   }
 
   return {
