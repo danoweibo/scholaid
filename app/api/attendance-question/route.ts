@@ -5,8 +5,6 @@ import type { QuestionResult } from "@/lib/types";
 
 const Schema = z.object({ topic: z.string().min(1).max(200) });
 
-
-
 const fallback = (
   topic: string,
   error?: string,
