@@ -1,14 +1,11 @@
 import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { generateStructured } from "@/lib/inference";
+import type { QuestionResult } from "@/lib/types";
 
 const Schema = z.object({ topic: z.string().min(1).max(200) });
 
-interface QuestionResult {
-  question: string;
-  options: string[];
-  correct: number;
-}
+
 
 const fallback = (
   topic: string,
