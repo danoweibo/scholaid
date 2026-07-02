@@ -111,7 +111,7 @@ export function ChatFab() {
               background: "var(--card)",
               boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
             }}
-            className="fixed right-7 bottom-28 z-50 flex h-[520px] w-[calc(100vw-2rem)] max-w-[380px] flex-col overflow-hidden rounded-2xl border"
+            className="fixed right-7 bottom-28 z-50 flex h-130 w-[calc(100vw-2rem)] max-w-95 flex-col overflow-hidden rounded-2xl border"
           >
             <div
               className="flex items-center justify-between px-5 py-4 text-white"
