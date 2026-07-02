@@ -44,7 +44,7 @@ export function StatCard({
       <div className="text-sm font-medium text-white/80">{label}</div>
       <div
         className="my-3 text-5xl tabular-nums"
-        style={{ fontFamily: "var(--font-apfel-fett)", fontWeight: 800 }}
+        style={{ fontFamily: "var(--font-apfel-fett)", fontWeight: 700 }}
       >
         <NumberFlow value={value} />
       </div>
