@@ -34,7 +34,7 @@ export function PerformanceSummaryButton({
         setText((t) => t + decoder.decode(value, { stream: true }));
       }
     } catch (e) {
-      setText("Could not generate summary right now.");
+      setText("Could not generate a summary right now.");
       console.error(e);
     } finally {
       setLoading(false);
