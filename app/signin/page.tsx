@@ -31,7 +31,7 @@ export default function LoginPage() {
 
       {/* Right panel — video with shimmer fallback */}
       <div className="bg-muted relative hidden overflow-hidden lg:block">
-        {/* Shimmer overlay — visible until video is ready */}
+        {/* Shimmer overlay — visible until video is loaded */}
         {!videoLoaded && (
           <div className="bg-muted absolute inset-0 z-10 overflow-hidden">
             <div
