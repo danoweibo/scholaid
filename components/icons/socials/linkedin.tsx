@@ -1,6 +1,6 @@
-import type { IconProps } from "@/lib/types/auth";
+import type { SVGProps } from "react";
 
-export function LinkedInIcon({ className, ...props }: IconProps) {
+export function LinkedInIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 176 176"
