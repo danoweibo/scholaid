@@ -1,6 +1,6 @@
-import type { IconProps } from "@/lib/types/auth";
+import type { SVGProps } from "react";
 
-export function WhatsAppIcon({ className, ...props }: IconProps) {
+export function WhatsAppIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="-23 -21 682 682.66669"
