@@ -1,6 +1,6 @@
-import type { IconProps } from "@/lib/types/auth";
+import type { SVGProps } from "react";
 
-export function YouTubeIcon({ className, ...props }: IconProps) {
+export function YouTubeIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="-21 -117 682.66672 682"
