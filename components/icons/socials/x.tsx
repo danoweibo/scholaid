@@ -1,6 +1,6 @@
-import type { IconProps } from "@/lib/types/auth";
+import type { SVGProps } from "react";
 
-export function XIcon({ className, ...props }: IconProps) {
+export function XIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 1226.37 1226.37"
