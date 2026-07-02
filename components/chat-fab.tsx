@@ -39,7 +39,7 @@ export function ChatFab() {
     setStreaming(true);
 
     try {
-      // Send all messages except the empty assistant placeholder
+      // Send all messages except the empty assistant placeholder.
       const payload = next.filter((m) => m.content).slice(0, -1);
 
       const res = await fetch("/api/chat", {
@@ -87,7 +87,7 @@ export function ChatFab() {
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.93 }}
         onClick={() => setOpen((o) => !o)}
-        className="fixed right-7 bottom-7 z-50 flex h-[60px] w-[60px] items-center justify-center rounded-full text-white"
+        className="fixed right-7 bottom-7 z-50 flex h-15 w-15 items-center justify-center rounded-full text-white"
         style={{
           background: "var(--primary)",
           boxShadow: "0 4px 24px rgba(0,0,0,0.18)",
