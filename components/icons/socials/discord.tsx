@@ -1,6 +1,6 @@
-import type { IconProps } from "@/lib/types/auth";
+import type { SVGProps } from "react";
 
-export function DiscordIcon({ className, ...props }: IconProps) {
+export function DiscordIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 512 512"
