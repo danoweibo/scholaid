@@ -14,7 +14,7 @@ export default function LoginPage() {
           <a href="#" className="flex items-center gap-2 font-medium">
             <Image
               src="/images/logotype-1.png"
-              alt="Scholaid"
+              alt="scholaid"
               width={120}
               height={30}
               className="h-auto w-30 object-contain"
