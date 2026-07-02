@@ -19,7 +19,7 @@ export function AvatarRow({
           className="flex shrink-0 flex-col items-center gap-2"
         >
           <div
-            className="flex h-[52px] w-[52px] items-center justify-center rounded-full text-white"
+            className="flex h-13 w-13 items-center justify-center rounded-full text-white"
             style={{
               background:
                 "linear-gradient(135deg, var(--chart-1), var(--chart-2))",
@@ -30,7 +30,7 @@ export function AvatarRow({
           >
             {initials(p.name)}
           </div>
-          <span className="text-muted-foreground max-w-[80px] truncate text-[12px]">
+          <span className="text-muted-foreground max-w-20 truncate text-[12px]">
             {prefix}
             {p.name}
           </span>
